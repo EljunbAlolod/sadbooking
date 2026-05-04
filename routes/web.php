@@ -64,6 +64,7 @@ Route::middleware(['auth', 'verified', 'role:landlord'])->prefix('landlord')->na
     Route::get('/tenants', [LandlordTenantController::class, 'index'])->name('tenants.index');
     Route::post('/tenants/{reservation}/remove', [LandlordTenantController::class, 'remove'])->name('tenants.remove');
     Route::get('/reservations', [LandlordReservationController::class, 'index'])->name('reservations.index');
+    Route::get('/reservations/history', [LandlordReservationController::class, 'history'])->name('reservations.history');
     Route::post('/reservations/{reservation}/approve', [LandlordReservationController::class, 'approve'])->name('reservations.approve');
     Route::post('/reservations/{reservation}/reject', [LandlordReservationController::class, 'reject'])->name('reservations.reject');
 

@@ -25,6 +25,20 @@ class LandlordReservationController extends Controller
         return view('landlord.reservations.index', ['reservations' => $reservations]);
     }
 
+    public function history(Request $request): View
+    {
+        $landlordId = $request->user()->id;
+
+        $reservations = Reservation::query()
+            ->with(['tenant', 'room.boardingHouse'])
+            ->whereHas('room.boardingHouse', fn ($q) => $q->where('landlord_id', $landlordId))
+            ->where('status', '!=', ReservationStatus::Pending)
+            ->latest()
+            ->paginate(15);
+
+        return view('landlord.reservations.history', ['reservations' => $reservations]);
+    }
+
     public function approve(Request $request, Reservation $reservation): RedirectResponse
     {
         $this->authorizeLandlordReservation($request, $reservation);
