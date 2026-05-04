@@ -22,7 +22,7 @@
             @endif
             <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm sm:p-8 space-y-4">
                 <p class="text-slate-700 whitespace-pre-line">{{ $boardingHouse->description ?: __('No description provided.') }}</p>
-                <p class="text-sm text-slate-600">{{ $boardingHouse->address }}</p>
+                <p class="text-sm text-slate-600">{{ $boardingHouse->full_address }}</p>
                 @if ($boardingHouse->amenities->isNotEmpty())
                     <div>
                         <h3 class="text-sm font-semibold text-slate-900">{{ __('Amenities') }}</h3>

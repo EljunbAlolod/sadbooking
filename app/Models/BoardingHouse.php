@@ -11,11 +11,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 
-#[Fillable(['landlord_id', 'title', 'description', 'address', 'photo_path'])]
+#[Fillable(['landlord_id', 'title', 'description', 'street', 'barangay', 'city', 'province', 'photo_path'])]
 class BoardingHouse extends Model
 {
     /** @use HasFactory<BoardingHouseFactory> */
     use HasFactory;
+
+    /**
+     * Get the full formatted address.
+     */
+    public function getFullAddressAttribute(): string
+    {
+        return collect([$this->street, $this->barangay, $this->city, $this->province])
+            ->filter()
+            ->implode(', ');
+    }
 
     /**
      * @return BelongsTo<User, $this>

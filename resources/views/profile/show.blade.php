@@ -111,7 +111,7 @@
                                             <div class="grid grid-cols-2 gap-6 py-4 border-y border-slate-50">
                                                 <div>
                                                     <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ __('Address') }}</label>
-                                                    <p class="text-sm font-bold text-slate-700 mt-0.5">{{ $currentStay->room->boardingHouse->address }}</p>
+                                                    <p class="text-sm font-bold text-slate-700 mt-0.5">{{ $currentStay->room->boardingHouse->full_address }}</p>
                                                 </div>
                                                 <div>
                                                     <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ __('Check In') }}</label>
