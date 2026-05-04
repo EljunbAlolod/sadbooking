@@ -1,10 +1,19 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ $boardingHouse->title }}</h2>
-            <div class="flex flex-wrap gap-3 text-sm">
-                <a href="{{ route('landlord.boarding-houses.rooms.index', $boardingHouse) }}" class="text-indigo-600 underline">{{ __('Manage rooms') }}</a>
-                <a href="{{ route('landlord.boarding-houses.edit', $boardingHouse) }}" class="text-indigo-600 underline">{{ __('Edit') }}</a>
+            <div>
+                <p class="text-sm font-medium text-indigo-600 uppercase tracking-wider">{{ __('Property Details') }}</p>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ $boardingHouse->title }}</h2>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+                <a href="{{ route('landlord.boarding-houses.rooms.index', $boardingHouse) }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-bold text-white hover:bg-slate-800 transition-all active:scale-95 shadow-lg shadow-slate-200">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                    {{ __('Manage Rooms') }}
+                </a>
+                <a href="{{ route('landlord.boarding-houses.edit', $boardingHouse) }}" class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all active:scale-95 shadow-sm">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                    {{ __('Edit Property') }}
+                </a>
             </div>
         </div>
     </x-slot>
