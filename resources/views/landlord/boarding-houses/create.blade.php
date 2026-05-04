@@ -10,20 +10,47 @@
     <div class="py-8">
         <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
             <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm sm:p-8">
-                <form method="POST" action="{{ route('landlord.boarding-houses.store') }}" enctype="multipart/form-data" class="space-y-8">
+                <form method="POST" action="{{ route('landlord.boarding-houses.store') }}" enctype="multipart/form-data" 
+                    x-data="{ 
+                        bhPhotos: [], 
+                        roomPhotos: [],
+                        handleFileSelect(event, type) {
+                            const files = Array.from(event.target.files);
+                            files.forEach(file => {
+                                const reader = new FileReader();
+                                reader.onload = (e) => {
+                                    if(type === 'bh') this.bhPhotos.push(e.target.result);
+                                    else this.roomPhotos.push(e.target.result);
+                                };
+                                reader.readAsDataURL(file);
+                            });
+                        }
+                    }" class="space-y-8">
                     @csrf
-                    <div class="space-y-4">
-                        <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-500">{{ __('Property') }}</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-2 border-b border-slate-100 pb-2">
+                            <svg class="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500">{{ __('Basic Information') }}</h3>
+                        </div>
+
                         <div>
-                            <x-input-label for="title" :value="__('Boarding house name')" />
-                            <x-text-input id="title" name="title" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('title')" required />
+                            <x-input-label for="title" :value="__('Listing Title')" />
+                            <x-text-input id="title" name="title" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('title')" required autofocus placeholder="{{ __('e.g. Sunny Male Dormitory') }}" />
                             <x-input-error :messages="$errors->get('title')" class="mt-2" />
                         </div>
+
                         <div>
                             <x-input-label for="description" :value="__('Description')" />
-                            <textarea id="description" name="description" rows="4" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ old('description') }}</textarea>
+                            <textarea id="description" name="description" rows="4" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="{{ __('Tell potential tenants about your boarding house...') }}">{{ old('description') }}</textarea>
                             <x-input-error :messages="$errors->get('description')" class="mt-2" />
                         </div>
+
+                        <div class="flex items-center gap-2 border-b border-slate-100 pb-2 pt-4">
+                            <svg class="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500">{{ __('Location Details') }}</h3>
+                        </div>
+
                         <div>
                             <x-input-label for="province" :value="__('Province')" />
                             <x-text-input id="province" name="province" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('province')" required autocomplete="off" placeholder="{{ __('Start typing to search...') }}" />
@@ -46,79 +73,144 @@
                             <x-text-input id="street" name="street" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('street')" placeholder="{{ __('e.g. 123 Rizal St, near public market') }}" />
                             <x-input-error :messages="$errors->get('street')" class="mt-2" />
                         </div>
-                        <div>
-                            <x-input-label for="photos" :value="__('Boarding house pictures (multiple)')" />
-                            <input id="photos" name="photos[]" type="file" accept="image/*" multiple class="mt-1 block w-full text-sm text-slate-600 file:mr-4 file:rounded-lg file:border-0 file:bg-indigo-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-indigo-700 hover:file:bg-indigo-100" />
-                            <p class="mt-1 text-xs text-slate-500">{{ __('Upload up to 10 photos. JPG, PNG, or WebP up to 4 MB each.') }}</p>
+
+                        <div class="flex items-center gap-2 border-b border-slate-100 pb-2 pt-4">
+                            <svg class="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500">{{ __('Media') }}</h3>
+                        </div>
+
+                        <div class="space-y-4">
+                            <x-input-label for="photos" :value="__('Boarding House Pictures')" />
+                            <div class="flex items-center justify-center w-full">
+                                <label for="photos" class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-2xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors">
+                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                        <svg class="w-8 h-8 mb-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                        <p class="mb-2 text-sm text-slate-500 font-semibold">{{ __('Click to upload') }} {{ __('or drag and drop') }}</p>
+                                        <p class="text-xs text-slate-400">PNG, JPG or WebP (MAX. 4MB)</p>
+                                    </div>
+                                    <input id="photos" name="photos[]" type="file" accept="image/*" multiple class="hidden" @change="handleFileSelect($event, 'bh')" />
+                                </label>
+                            </div>
+                            
+                            <!-- Preview Grid -->
+                            <div x-show="bhPhotos.length > 0" class="grid grid-cols-2 gap-4 sm:grid-cols-4 mt-4">
+                                <template x-for="(photo, index) in bhPhotos" :key="index">
+                                    <div class="relative group aspect-square rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+                                        <img :src="photo" class="h-full w-full object-cover">
+                                        <button type="button" @click="bhPhotos.splice(index, 1)" class="absolute top-2 right-2 rounded-full bg-red-500 p-1 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L12 6M6 6l12 12" /></svg>
+                                        </button>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <p class="text-xs text-slate-500">{{ __('Upload up to 10 photos.') }}</p>
                             <x-input-error :messages="$errors->get('photos')" class="mt-2" />
                             <x-input-error :messages="\Illuminate\Support\Arr::flatten($errors->get('photos.*'))" class="mt-2" />
                         </div>
+
+                        <div class="flex items-center gap-2 border-b border-slate-100 pb-2 pt-4">
+                            <svg class="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.286-6.857L1 12l7.714-2.143L11 3z" /></svg>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500">{{ __('Features & Amenities') }}</h3>
+                        </div>
+
                         <div>
-                            <x-input-label :value="__('Amenities')" />
-                            <div class="mt-2 grid gap-2 sm:grid-cols-2">
+                            <x-input-label :value="__('Select Amenities')" />
+                            <div class="mt-2 grid gap-3 sm:grid-cols-3">
                                 @foreach ($amenities as $amenity)
-                                    <label class="inline-flex items-center gap-2 rounded-lg border border-slate-100 bg-slate-50/80 px-3 py-2 text-sm hover:border-slate-200">
-                                        <input type="checkbox" name="amenity_ids[]" value="{{ $amenity->id }}" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" @checked(in_array($amenity->id, old('amenity_ids', []), true))>
-                                        <span>{{ $amenity->name }}</span>
+                                    <label class="relative flex cursor-pointer rounded-xl border border-slate-200 bg-white p-3 shadow-sm hover:border-indigo-200 transition-all">
+                                        <input type="checkbox" name="amenity_ids[]" value="{{ $amenity->id }}" class="sr-only peer" @checked(in_array($amenity->id, old('amenity_ids', []), true))>
+                                        <div class="flex w-full items-center justify-between peer-checked:text-indigo-600">
+                                            <span class="text-sm font-medium">{{ $amenity->name }}</span>
+                                            <svg class="h-5 w-5 opacity-0 peer-checked:opacity-100 transition-opacity text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                                        </div>
+                                        <div class="absolute inset-0 rounded-xl border-2 border-transparent peer-checked:border-indigo-600 pointer-events-none"></div>
                                     </label>
                                 @endforeach
                             </div>
                         </div>
+
                         <div>
-                            <x-input-label for="new_amenities" :value="__('Add new amenities')" />
-                            <textarea id="new_amenities" name="new_amenities" rows="2" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="{{ __('Example: Common CR, CCTV, Study area') }}">{{ old('new_amenities') }}</textarea>
+                            <x-input-label for="new_amenities" :value="__('Custom Amenities')" />
+                            <textarea id="new_amenities" name="new_amenities" rows="2" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="{{ __('e.g. Roof deck, High-speed fiber internet, Shared kitchen') }}">{{ old('new_amenities') }}</textarea>
                             <p class="mt-1 text-xs text-slate-500">{{ __('Separate by comma or new line.') }}</p>
                             <x-input-error :messages="$errors->get('new_amenities')" class="mt-2" />
                         </div>
                     </div>
 
-                    <div class="space-y-4 border-t border-slate-100 pt-8">
-                        <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-500">{{ __('First room') }}</h3>
-                        <p class="text-sm text-slate-600">{{ __('You can add more rooms after saving.') }}</p>
-                        <div class="grid gap-4 sm:grid-cols-2">
+                    <div class="space-y-6 pt-8 border-t border-slate-100">
+                        <div class="flex items-center gap-2">
+                            <svg class="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500">{{ __('First Room Configuration') }}</h3>
+                        </div>
+                        <p class="text-sm text-slate-600">{{ __('Every listing needs at least one room. You can add more later.') }}</p>
+                        
+                        <div class="grid gap-6 sm:grid-cols-2">
                             <div>
-                                <x-input-label for="room_number" :value="__('Room number')" />
-                                <x-text-input id="room_number" name="room_number" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('room_number')" required />
+                                <x-input-label for="room_number" :value="__('Room Number/Name')" />
+                                <x-text-input id="room_number" name="room_number" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('room_number')" required placeholder="e.g. Room 101 or Attic Room" />
                                 <x-input-error :messages="$errors->get('room_number')" class="mt-2" />
                             </div>
                             <div>
-                                <x-input-label for="monthly_rate" :value="__('Monthly rate')" />
-                                <x-text-input id="monthly_rate" name="monthly_rate" type="number" step="0.01" min="0" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('monthly_rate')" required />
+                                <x-input-label for="monthly_rate" :value="__('Monthly Rate (PHP)')" />
+                                <x-text-input id="monthly_rate" name="monthly_rate" type="number" step="0.01" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('monthly_rate')" required placeholder="0.00" />
                                 <x-input-error :messages="$errors->get('monthly_rate')" class="mt-2" />
                             </div>
                             <div class="sm:col-span-2">
-                                <x-input-label for="capacity" :value="__('Capacity (optional)')" />
-                                <x-text-input id="capacity" name="capacity" type="number" min="1" max="50" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('capacity', '1')" />
+                                <x-input-label for="capacity" :value="__('Total Capacity')" />
+                                <x-text-input id="capacity" name="capacity" type="number" min="1" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('capacity', '1')" required placeholder="How many people?" />
                                 <x-input-error :messages="$errors->get('capacity')" class="mt-2" />
                             </div>
                             <div class="sm:col-span-2">
-                                <x-input-label :value="__('Room amenities (private CR, etc.)')" />
-                                <div class="mt-2 grid gap-2 sm:grid-cols-2">
+                                <x-input-label :value="__('Room Amenities')" />
+                                <div class="mt-2 grid gap-3 sm:grid-cols-3">
                                     @foreach ($amenities as $amenity)
-                                        <label class="inline-flex items-center gap-2 rounded-lg border border-slate-100 bg-slate-50/80 px-3 py-2 text-sm hover:border-slate-200">
-                                            <input type="checkbox" name="room_amenity_ids[]" value="{{ $amenity->id }}" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" @checked(in_array($amenity->id, old('room_amenity_ids', []), true))>
-                                            <span>{{ $amenity->name }}</span>
+                                        <label class="relative flex cursor-pointer rounded-xl border border-slate-200 bg-white p-3 shadow-sm hover:border-indigo-200 transition-all">
+                                            <input type="checkbox" name="room_amenity_ids[]" value="{{ $amenity->id }}" class="sr-only peer" @checked(in_array($amenity->id, old('room_amenity_ids', []), true))>
+                                            <div class="flex w-full items-center justify-between peer-checked:text-indigo-600">
+                                                <span class="text-sm font-medium">{{ $amenity->name }}</span>
+                                                <svg class="h-5 w-5 opacity-0 peer-checked:opacity-100 transition-opacity text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                                            </div>
+                                            <div class="absolute inset-0 rounded-xl border-2 border-transparent peer-checked:border-indigo-600 pointer-events-none"></div>
                                         </label>
                                     @endforeach
                                 </div>
                             </div>
                             <div class="sm:col-span-2">
-                                <x-input-label for="room_new_amenities" :value="__('Add new room amenities')" />
-                                <textarea id="room_new_amenities" name="room_new_amenities" rows="2" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="{{ __('Example: Private CR, Sink, Closet') }}">{{ old('room_new_amenities') }}</textarea>
-                                <p class="mt-1 text-xs text-slate-500">{{ __('Separate by comma or new line.') }}</p>
-                            </div>
-                            <div class="sm:col-span-2">
-                                <x-input-label for="room_photos" :value="__('Room pictures (multiple)')" />
-                                <input id="room_photos" name="room_photos[]" type="file" accept="image/*" multiple class="mt-1 block w-full text-sm text-slate-600 file:mr-4 file:rounded-lg file:border-0 file:bg-indigo-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-indigo-700 hover:file:bg-indigo-100" />
+                                <x-input-label for="room_photos" :value="__('Room Pictures')" />
+                                <div class="flex items-center justify-center w-full">
+                                    <label for="room_photos" class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-2xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors">
+                                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                            <svg class="w-8 h-8 mb-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                            <p class="mb-2 text-sm text-slate-500 font-semibold">{{ __('Click to upload room photos') }}</p>
+                                        </div>
+                                        <input id="room_photos" name="room_photos[]" type="file" accept="image/*" multiple class="hidden" @change="handleFileSelect($event, 'room')" />
+                                    </label>
+                                </div>
+
+                                <!-- Room Preview Grid -->
+                                <div x-show="roomPhotos.length > 0" class="grid grid-cols-2 gap-4 sm:grid-cols-4 mt-4">
+                                    <template x-for="(photo, index) in roomPhotos" :key="index">
+                                        <div class="relative group aspect-square rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+                                            <img :src="photo" class="h-full w-full object-cover">
+                                            <button type="button" @click="roomPhotos.splice(index, 1)" class="absolute top-2 right-2 rounded-full bg-red-500 p-1 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L12 6M6 6l12 12" /></svg>
+                                            </button>
+                                        </div>
+                                    </template>
+                                </div>
+
                                 <x-input-error :messages="$errors->get('room_photos')" class="mt-2" />
                                 <x-input-error :messages="\Illuminate\Support\Arr::flatten($errors->get('room_photos.*'))" class="mt-2" />
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex flex-wrap gap-3 border-t border-slate-100 pt-6">
-                        <x-primary-button class="rounded-xl">{{ __('Save listing') }}</x-primary-button>
-                        <a href="{{ route('landlord.boarding-houses.index') }}" class="inline-flex items-center rounded-xl px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900">{{ __('Cancel') }}</a>
+                    <div class="flex flex-wrap items-center justify-end gap-4 border-t border-slate-100 pt-8">
+                        <a href="{{ route('landlord.boarding-houses.index') }}" class="inline-flex items-center rounded-xl px-6 py-3 text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors">{{ __('Cancel') }}</a>
+                        <x-primary-button class="rounded-2xl px-8 py-3 bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition-all active:scale-95">
+                            {{ __('Publish Listing') }}
+                        </x-primary-button>
                     </div>
                 </form>
             </div>
