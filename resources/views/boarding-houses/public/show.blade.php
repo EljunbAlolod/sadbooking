@@ -2,10 +2,10 @@
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <p class="text-sm font-medium text-purple-600 uppercase tracking-wider">{{ __('Public Listing') }}</p>
+                <p class="text-sm font-medium text-indigo-600 uppercase tracking-wider">{{ __('Public Listing') }}</p>
                 <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ $boardingHouse->title }}</h2>
             </div>
-            <a href="{{ route('boarding-houses.index') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-purple-600 transition-colors">
+            <a href="{{ route('boarding-houses.index') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                 {{ __('Back to listings') }}
             </a>
@@ -178,7 +178,7 @@
                                                     </button>
                                                 @endif
                                             @else
-                                                <a href="{{ route('login') }}" class="inline-flex w-full items-center justify-center rounded-2xl bg-purple-600 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-purple-200 transition-all hover:bg-purple-700 active:scale-95">
+                                                <a href="{{ route('login') }}" class="inline-flex w-full items-center justify-center rounded-2xl bg-indigo-600 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-200 transition-all hover:bg-indigo-700 active:scale-95">
                                                     {{ __('Log in to reserve') }}
                                                 </a>
                                             @endauth
