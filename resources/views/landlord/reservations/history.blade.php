@@ -2,14 +2,15 @@
     <x-slot name="header">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <p class="text-sm font-medium text-purple-600 uppercase tracking-wider">{{ __('Management') }}</p>
-                <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ __('Current Boarders') }}</h2>
-                <p class="mt-2 text-sm text-slate-600 max-w-2xl">{{ __('Manage your active tenants, their stay periods, and property assignments.') }}</p>
+                <p class="text-sm font-medium text-purple-600 uppercase tracking-wider">{{ __('Landlord Dashboard') }}</p>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ __('Reservation History') }}</h2>
+                <p class="mt-2 text-sm text-slate-600 max-w-2xl">{{ __('Complete history of all approved, rejected, cancelled, and completed reservations.') }}</p>
             </div>
-            <div class="hidden sm:block">
-                <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-50 text-purple-600 shadow-sm">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-                </div>
+            <div class="flex items-center gap-3">
+                <a href="{{ route('landlord.reservations.index') }}" class="inline-flex items-center justify-center gap-2 text-sm font-semibold text-slate-600 hover:text-purple-600 transition-colors">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                    {{ __('Back to Pending') }}
+                </a>
             </div>
         </div>
     </x-slot>
@@ -23,13 +24,22 @@
                             <tr class="bg-slate-50/80 text-left text-[10px] font-bold uppercase tracking-widest text-slate-500">
                                 <th class="px-8 py-5 sm:px-10">{{ __('Tenant Information') }}</th>
                                 <th class="px-6 py-5">{{ __('Property & Room') }}</th>
-                                <th class="px-6 py-5">{{ __('Stay Period') }}</th>
+                                <th class="px-6 py-5">{{ __('Stay Timeline') }}</th>
                                 <th class="px-6 py-5">{{ __('Status') }}</th>
-                                <th class="px-6 py-5"></th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 bg-white">
                             @forelse ($reservations as $reservation)
+                                @php
+                                    $statusStyles = match ($reservation->status) {
+                                        \App\Enums\ReservationStatus::Approved => 'bg-emerald-50 text-emerald-700 border-emerald-100',
+                                        \App\Enums\ReservationStatus::Rejected => 'bg-rose-50 text-rose-700 border-rose-100',
+                                        \App\Enums\ReservationStatus::Active => 'bg-indigo-50 text-indigo-700 border-indigo-100',
+                                        \App\Enums\ReservationStatus::Completed => 'bg-slate-50 text-slate-600 border-slate-200',
+                                        \App\Enums\ReservationStatus::Cancelled => 'bg-slate-100 text-slate-500 border-slate-200',
+                                        default => 'bg-slate-50 text-slate-400 border-slate-100',
+                                    };
+                                @endphp
                                 <tr class="group hover:bg-slate-50/50 transition-colors">
                                     <td class="px-8 py-6 sm:px-10">
                                         <div class="flex items-center gap-4">
@@ -59,53 +69,36 @@
                                             <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
                                                 <svg class="h-3.5 w-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                                 @if($reservation->end_date)
-                                                    {{ __('Ends') }} {{ $reservation->end_date->format('M d, Y') }}
+                                                    {{ $reservation->end_date->format('M d, Y') }}
                                                 @else
-                                                    <span class="text-emerald-600 uppercase tracking-widest text-[9px]">{{ __('Ongoing Stay') }}</span>
+                                                    {{ __('Ongoing') }}
                                                 @endif
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-6">
-                                        <span @class([
-                                            'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest shadow-sm border',
-                                            'bg-indigo-50 text-indigo-700 border-indigo-100' => $reservation->status->value === 'active',
-                                            'bg-emerald-50 text-emerald-700 border-emerald-100' => $reservation->status->value === 'completed',
-                                            'bg-slate-50 text-slate-600 border-slate-100' => !in_array($reservation->status->value, ['active', 'completed']),
-                                        ])>
-                                            <span @class([
-                                                'h-1.5 w-1.5 rounded-full',
-                                                'bg-indigo-500' => $reservation->status->value === 'active',
-                                                'bg-emerald-500' => $reservation->status->value === 'completed',
-                                                'bg-slate-400' => !in_array($reservation->status->value, ['active', 'completed']),
-                                            ])></span>
+                                        <span class="inline-flex rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest shadow-sm border {{ $statusStyles }}">
                                             {{ $reservation->status->value }}
                                         </span>
-                                    </td>
-                                    <td class="px-8 py-6 text-end sm:px-10">
-                                        <form action="{{ route('landlord.tenants.remove', $reservation) }}" method="POST" onsubmit="return confirm('{{ __('Are you sure you want to remove this tenant? This will mark their stay as completed.') }}')" class="inline">
-                                            @csrf
-                                            <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-purple-600 px-4 py-2 text-xs font-bold text-white hover:bg-purple-700 transition-all active:scale-95 shadow-lg shadow-purple-100">
-                                                <svg class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
-                                                {{ __('Evict/Remove') }}
-                                            </button>
-                                        </form>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-8 py-20 text-center">
+                                    <td colspan="4" class="px-8 py-20 text-center">
                                         <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-slate-50 text-slate-300">
-                                            <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                                            <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                         </div>
-                                        <h3 class="mt-4 text-sm font-bold text-slate-900">{{ __('No active boarders') }}</h3>
-                                        <p class="mt-1 text-xs text-slate-500">{{ __('When tenants move into your properties, they will appear here.') }}</p>
+                                        <h3 class="mt-4 text-sm font-bold text-slate-900">{{ __('No reservation history') }}</h3>
+                                        <p class="mt-1 text-xs text-slate-500">{{ __('Processed requests will appear here for your records.') }}</p>
                                     </td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
+                @if ($reservations->hasPages())
+                    <div class="bg-slate-50/50 border-t border-slate-100 px-8 py-5 sm:px-10">{{ $reservations->links() }}</div>
+                @endif
             </div>
         </div>
     </div>
