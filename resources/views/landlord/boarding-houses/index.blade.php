@@ -2,11 +2,11 @@
     <x-slot name="header">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <p class="text-sm font-medium text-purple-600 uppercase tracking-wider">{{ __('Landlord Dashboard') }}</p>
+                <p class="text-sm font-medium text-indigo-600 uppercase tracking-wider">{{ __('Landlord Dashboard') }}</p>
                 <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ __('Your Boarding Houses') }}</h2>
             </div>
             <a href="{{ route('landlord.boarding-houses.create') }}">
-                <x-primary-button type="button" class="rounded-2xl px-6 py-3 bg-purple-600 hover:bg-purple-700 shadow-lg shadow-purple-200 transition-all active:scale-95">
+                <x-primary-button type="button" class="rounded-2xl px-6 py-3 bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition-all active:scale-95">
                     <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                     {{ __('Add New Property') }}
                 </x-primary-button>
@@ -40,7 +40,7 @@
                         <!-- Property Content -->
                         <div class="flex flex-1 flex-col p-6">
                             <div class="flex-1">
-                                <h3 class="text-xl font-bold text-slate-900 group-hover:text-purple-600 transition-colors line-clamp-1">
+                                <h3 class="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors line-clamp-1">
                                     {{ $house->title }}
                                 </h3>
                                 <p class="mt-2 flex items-start gap-1.5 text-sm text-slate-600">
@@ -58,7 +58,7 @@
 
                             <!-- Actions -->
                             <div class="mt-6 flex items-center gap-2 border-t border-slate-100 pt-6">
-                                <a href="{{ route('landlord.boarding-houses.rooms.index', $house) }}" class="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-purple-600 px-4 py-2 text-xs font-bold text-white hover:bg-purple-700 transition-all active:scale-95 shadow-sm shadow-purple-100">
+                                <a href="{{ route('landlord.boarding-houses.rooms.index', $house) }}" class="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-indigo-600 px-4 py-2 text-xs font-bold text-white hover:bg-indigo-700 transition-all active:scale-95 shadow-sm shadow-indigo-100">
                                     <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
                                     {{ __('Rooms') }}
                                 </a>
