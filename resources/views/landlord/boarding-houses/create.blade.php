@@ -25,9 +25,26 @@
                             <x-input-error :messages="$errors->get('description')" class="mt-2" />
                         </div>
                         <div>
-                            <x-input-label for="address" :value="__('Location / address')" />
-                            <x-text-input id="address" name="address" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('address')" required />
-                            <x-input-error :messages="$errors->get('address')" class="mt-2" />
+                            <x-input-label for="province" :value="__('Province')" />
+                            <x-text-input id="province" name="province" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('province')" required autocomplete="off" placeholder="{{ __('Start typing to search...') }}" />
+                            <x-input-error :messages="$errors->get('province')" class="mt-2" />
+                        </div>
+                        <div class="grid gap-4 sm:grid-cols-2">
+                            <div>
+                                <x-input-label for="city" :value="__('City / Municipality')" />
+                                <x-text-input id="city" name="city" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('city')" required autocomplete="off" placeholder="{{ __('Start typing to search...') }}" />
+                                <x-input-error :messages="$errors->get('city')" class="mt-2" />
+                            </div>
+                            <div>
+                                <x-input-label for="barangay" :value="__('Barangay')" />
+                                <x-text-input id="barangay" name="barangay" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('barangay')" autocomplete="off" placeholder="{{ __('Start typing to search...') }}" />
+                                <x-input-error :messages="$errors->get('barangay')" class="mt-2" />
+                            </div>
+                        </div>
+                        <div>
+                            <x-input-label for="street" :value="__('Street / Landmark (optional)')" />
+                            <x-text-input id="street" name="street" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('street')" placeholder="{{ __('e.g. 123 Rizal St, near public market') }}" />
+                            <x-input-error :messages="$errors->get('street')" class="mt-2" />
                         </div>
                         <div>
                             <x-input-label for="photos" :value="__('Boarding house pictures (multiple)')" />
@@ -108,3 +125,174 @@
         </div>
     </div>
 </x-app-layout>
+
+@push('scripts')
+<style>
+    .autocomplete-dropdown {
+        position: absolute;
+        z-index: 50;
+        width: 100%;
+        background-color: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.75rem;
+        margin-top: 0.25rem;
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        max-height: 15rem;
+        overflow-y: auto;
+        display: none;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .autocomplete-dropdown.active {
+        display: block;
+    }
+    .autocomplete-item {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        color: #334155;
+        cursor: pointer;
+        list-style: none;
+    }
+    .autocomplete-item:hover {
+        background-color: #eef2ff;
+    }
+    .autocomplete-wrapper {
+        position: relative;
+    }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const fields = {
+        province: document.getElementById('province'),
+        city: document.getElementById('city'),
+        barangay: document.getElementById('barangay'),
+    };
+
+    // Create dropdowns for each field
+    const dropdowns = {};
+    Object.entries(fields).forEach(([key, input]) => {
+        if (!input) return;
+        const wrapper = document.createElement('div');
+        wrapper.className = 'autocomplete-wrapper';
+        wrapper.style.position = 'relative';
+        input.parentNode.insertBefore(wrapper, input);
+        wrapper.appendChild(input);
+
+        const dropdown = document.createElement('ul');
+        dropdown.className = 'autocomplete-dropdown';
+        wrapper.appendChild(dropdown);
+        dropdowns[key] = dropdown;
+    });
+
+    let debounceTimers = {};
+
+    function searchNominatim(query, type) {
+        return new Promise((resolve, reject) => {
+            if (!query || query.length < 2) return resolve([]);
+            let searchQuery = query + ', Philippines';
+            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(searchQuery)}&format=json&addressdetails=1&countrycodes=ph&limit=8&email=sadbooking@example.com&accept-language=en`;
+            
+            $.ajax({
+                url: url,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    console.log(`Nominatim results for "${query}":`, data);
+                    resolve(Array.isArray(data) ? data : []);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Nominatim AJAX search failed:', error);
+                    resolve([]);
+                }
+            });
+        });
+    }
+
+    function getComponent(address, keys) {
+        if (!address) return '';
+        for (const key of keys) {
+            if (address[key]) return address[key];
+        }
+        return '';
+    }
+
+    function setupAutocomplete(fieldKey, inputEl, type) {
+        if (!inputEl) return;
+        const dropdown = dropdowns[fieldKey];
+
+        inputEl.addEventListener('input', function () {
+            clearTimeout(debounceTimers[fieldKey]);
+            dropdown.classList.remove('active');
+            dropdown.innerHTML = '';
+
+            const val = this.value.trim();
+            if (val.length < 2) return;
+
+            debounceTimers[fieldKey] = setTimeout(async () => {
+                const results = await searchNominatim(val, type);
+                if (results.length === 0) {
+                    console.warn('No results from Nominatim for:', val);
+                    return;
+                }
+
+                dropdown.innerHTML = '';
+                results.forEach(result => {
+                    const li = document.createElement('li');
+                    li.className = 'autocomplete-item';
+                    li.textContent = result.display_name;
+                    li.style.cursor = 'pointer';
+                    li.addEventListener('click', () => {
+                        const addr = result.address;
+                        
+                        // Fill the clicked input with the most relevant name part
+                        let primaryName = result.name;
+                        if (type === 'province') {
+                            primaryName = getComponent(addr, ['state', 'region']) || result.name;
+                        } else if (type === 'city') {
+                            primaryName = getComponent(addr, ['city', 'town', 'municipality', 'county']) || result.name;
+                        } else if (type === 'barangay') {
+                            primaryName = getComponent(addr, ['suburb', 'village', 'quarter', 'neighbourhood', 'hamlet']) || result.name;
+                        }
+                        
+                        inputEl.value = primaryName || result.display_name.split(',')[0];
+                        dropdown.classList.remove('active');
+                        inputEl.dispatchEvent(new Event('change', { bubbles: true }));
+
+                        // Auto-fill other fields if possible
+                        if (addr) {
+                            const state = getComponent(addr, ['state', 'region']);
+                            const city = getComponent(addr, ['city', 'town', 'municipality', 'county']);
+                            
+                            if (state && fields.province && !fields.province.value) {
+                                fields.province.value = state;
+                            }
+                            if (city && fields.city && (!fields.city.value || type === 'barangay')) {
+                                fields.city.value = city;
+                            }
+                        }
+
+                        // Focus next logical field
+                        if (type === 'province' && fields.city) fields.city.focus();
+                        else if (type === 'city' && fields.barangay) fields.barangay.focus();
+                    });
+                    dropdown.appendChild(li);
+                });
+                dropdown.classList.add('active');
+            }, 300);
+        });
+
+        // Hide dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            if (inputEl && inputEl.parentNode && !inputEl.parentNode.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+    }
+
+    setupAutocomplete('province', fields.province, 'province');
+    setupAutocomplete('city', fields.city, 'city');
+    setupAutocomplete('barangay', fields.barangay, 'barangay');
+});
+</script>
+@endpush

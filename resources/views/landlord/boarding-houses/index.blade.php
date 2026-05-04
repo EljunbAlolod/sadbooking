@@ -25,7 +25,7 @@
                         </div>
                         <div class="min-w-0">
                             <h3 class="text-lg font-semibold text-slate-900">{{ $house->title }}</h3>
-                            <p class="text-sm text-slate-600">{{ $house->address }}</p>
+                            <p class="text-sm text-slate-600">{{ $house->full_address }}</p>
                             <p class="mt-1 text-xs text-slate-500">{{ __('Rooms') }}: {{ $house->rooms_count }}</p>
                         </div>
                     </div>

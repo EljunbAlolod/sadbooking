@@ -42,7 +42,7 @@
                             </div>
                             <div class="flex flex-1 flex-col gap-2 p-4">
                                 <h4 class="font-semibold text-slate-900">{{ $house->title }}</h4>
-                                <p class="line-clamp-2 text-sm text-slate-600">{{ $house->address }}</p>
+                                <p class="line-clamp-2 text-sm text-slate-600">{{ $house->full_address }}</p>
                                 <p class="text-xs text-slate-500">{{ trans_choice(':count room|:count rooms', $house->rooms_count, ['count' => $house->rooms_count]) }}</p>
                                 @if ($house->amenities->isNotEmpty())
                                     <p class="text-xs text-slate-500">{{ $house->amenities->pluck('name')->take(3)->join(', ') }}{{ $house->amenities->count() > 3 ? '…' : '' }}</p>

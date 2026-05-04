@@ -41,7 +41,10 @@ class LandlordBoardingHouseController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'address' => ['required', 'string', 'max:500'],
+            'street' => ['nullable', 'string', 'max:500'],
+            'barangay' => ['nullable', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'province' => ['required', 'string', 'max:255'],
             'photos' => ['nullable', 'array', 'max:10'],
             'photos.*' => ['nullable', File::image()->max(4096)],
             'amenity_ids' => ['nullable', 'array'],
@@ -64,7 +67,10 @@ class LandlordBoardingHouseController extends Controller
                 'landlord_id' => $request->user()->id,
                 'title' => $validated['title'],
                 'description' => $validated['description'] ?? null,
-                'address' => $validated['address'],
+                'street' => $validated['street'] ?? null,
+                'barangay' => $validated['barangay'] ?? null,
+                'city' => $validated['city'],
+                'province' => $validated['province'],
             ]);
 
             $houseAmenityIds = $this->mergeAmenityIds(
@@ -128,7 +134,10 @@ class LandlordBoardingHouseController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'address' => ['required', 'string', 'max:500'],
+            'street' => ['nullable', 'string', 'max:500'],
+            'barangay' => ['nullable', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'province' => ['required', 'string', 'max:255'],
             'photos' => ['nullable', 'array', 'max:10'],
             'photos.*' => ['nullable', File::image()->max(4096)],
             'remove_photo_ids' => ['nullable', 'array'],
@@ -142,7 +151,10 @@ class LandlordBoardingHouseController extends Controller
         $boarding_house->update([
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
-            'address' => $validated['address'],
+            'street' => $validated['street'] ?? null,
+            'barangay' => $validated['barangay'] ?? null,
+            'city' => $validated['city'],
+            'province' => $validated['province'],
         ]);
 
         if ($request->boolean('remove_photo')) {

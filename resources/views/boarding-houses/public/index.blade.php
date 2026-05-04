@@ -46,7 +46,7 @@
                         </div>
                         <div class="flex flex-1 flex-col gap-2 p-6">
                             <h3 class="text-lg font-semibold text-slate-900">{{ $house->title }}</h3>
-                            <p class="text-sm text-slate-600 line-clamp-2">{{ $house->address }}</p>
+                            <p class="text-sm text-slate-600 line-clamp-2">{{ $house->full_address }}</p>
                             @if ($house->rooms->isNotEmpty())
                                 <p class="text-sm text-slate-800">
                                     {{ __('From') }}

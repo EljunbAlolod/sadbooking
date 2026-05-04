@@ -45,7 +45,7 @@
                             </div>
                             <div class="flex flex-1 flex-col gap-2 p-4">
                                 <h4 class="font-semibold text-slate-900">{{ $house->title }}</h4>
-                                <p class="line-clamp-2 text-sm text-slate-600">{{ $house->address }}</p>
+                                <p class="line-clamp-2 text-sm text-slate-600">{{ $house->full_address }}</p>
                                 @if ($house->rooms->isNotEmpty())
                                     <p class="text-sm text-slate-800">
                                         {{ __('From') }}
@@ -71,7 +71,7 @@
                     <dl class="mt-4 grid gap-3 text-sm text-slate-700 sm:grid-cols-2">
                         <div><span class="font-medium text-slate-900">{{ __('Boarding house') }}:</span> {{ $currentStay->room->boardingHouse->title }}</div>
                         <div><span class="font-medium text-slate-900">{{ __('Room') }}:</span> {{ $currentStay->room->room_number }}</div>
-                        <div class="sm:col-span-2"><span class="font-medium text-slate-900">{{ __('Address') }}:</span> {{ $currentStay->room->boardingHouse->address }}</div>
+                        <div class="sm:col-span-2"><span class="font-medium text-slate-900">{{ __('Address') }}:</span> {{ $currentStay->room->boardingHouse->full_address }}</div>
                         <div>
                             <span class="font-medium text-slate-900">{{ __('Stay') }}:</span> 
                             {{ $currentStay->start_date->format('M j, Y') }} – 

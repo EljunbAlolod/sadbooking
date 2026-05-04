@@ -38,7 +38,7 @@
                     <span class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset {{ $statusStyles }}">{{ ucfirst($reservation->status->value) }}</span>
                 </div>
                 <dl class="grid gap-3 text-sm text-slate-700">
-                    <div><span class="font-semibold text-slate-900">{{ __('Location') }}:</span> {{ $reservation->room->boardingHouse->address }}</div>
+                    <div><span class="font-semibold text-slate-900">{{ __('Location') }}:</span> {{ $reservation->room->boardingHouse->full_address }}</div>
                     <div><span class="font-semibold text-slate-900">{{ __('Start') }}:</span> {{ $reservation->start_date->format('l, M j, Y') }}</div>
                     <div>
                         <span class="font-semibold text-slate-900">{{ __('End') }}:</span> 
