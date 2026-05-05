@@ -3,7 +3,7 @@
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <p class="text-sm font-medium text-indigo-600 uppercase tracking-wider">{{ __('Welcome Back') }}</p>
-                <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ __('Tenant Dashboard') }}</h2>
+                <h2 class="text-3xl font-bold tracking-tight text-slate-700">{{ auth()->user()->name }}<span>{{ __('! 👋') }}</span></h2>
                 <p class="mt-2 text-sm text-slate-600 max-w-2xl">{{ __('Manage your reservations, view billing notices, and discover your next stay.') }}</p>
             </div>
             <div class="hidden sm:block">
@@ -118,6 +118,10 @@
                                         <svg class="h-3.5 w-3.5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                                         {{ $house->full_address }}
                                     </p>
+                                    <p class="mt-2 text-[10px] font-bold text-emerald-600 uppercase tracking-widest flex items-center gap-1.5">
+                                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                        {{ trans_choice(':count room available|:count rooms available', $house->availableRoomsCount(), ['count' => $house->availableRoomsCount()]) }}
+                                    </p>
                                 </div>
 
                                 <div class="mt-auto pt-4 border-t border-slate-100">
@@ -192,9 +196,6 @@
                                         <span class="text-3xl font-black text-slate-900">₱{{ number_format($currentStay->room->monthly_rate, 2) }}</span>
                                         <span class="text-sm font-bold text-slate-500">/ mo</span>
                                     </div>
-                                    <button class="mt-8 w-full rounded-2xl bg-white border border-slate-200 py-4 text-sm font-bold text-slate-700 hover:bg-white hover:border-indigo-600 hover:text-indigo-600 transition-all active:scale-95 shadow-sm">
-                                        {{ __('Contact Landlord') }}
-                                    </button>
                                 </div>
                             </div>
                         </div>

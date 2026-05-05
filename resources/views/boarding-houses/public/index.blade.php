@@ -89,12 +89,28 @@
 
                         <div class="flex flex-1 flex-col gap-4 p-8">
                             <div class="flex-1">
-                                <h3 class="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors line-clamp-1">{{ $house->title }}</h3>
-                                <p class="mt-2 flex items-start gap-2 text-sm text-slate-500">
-                                    <svg class="h-5 w-5 shrink-0 text-indigo-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                                    <span class="line-clamp-2 leading-relaxed">{{ $house->full_address }}</span>
-                                </p>
-                            </div>
+                                    <h3 class="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors line-clamp-1">{{ $house->title }}</h3>
+                                    <p class="mt-2 flex items-start gap-2 text-sm text-slate-500">
+                                        <svg class="h-5 w-5 shrink-0 text-indigo-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                        <span class="line-clamp-2 leading-relaxed">{{ $house->full_address }}</span>
+                                    </p>
+                                    <div class="mt-4 text-xs font-bold text-emerald-600 uppercase tracking-widest flex items-center gap-2">
+    
+                                    <!-- Icon -->
+                                    <div class="flex h-6 w-6 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
+                                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+
+                                    <!-- Text -->
+                                    <span>
+                                        {{ trans_choice(':count room available|:count rooms available', $house->availableRoomsCount(), ['count' => $house->availableRoomsCount()]) }}
+                                    </span>
+
+                             </div>
+                                </div>
 
                             @if ($house->amenities->isNotEmpty())
                                 <div class="flex flex-wrap gap-2 py-2 border-t border-slate-100">
@@ -111,7 +127,7 @@
 
                             <div class="mt-auto pt-6">
                                 <a href="{{ route('boarding-houses.show', $house) }}" class="inline-flex w-full items-center justify-center rounded-2xl bg-slate-900 px-6 py-4 text-sm font-bold text-white shadow-xl shadow-slate-100 transition-all hover:bg-indigo-600 active:scale-95 group/btn">
-                                    {{ __('Explore Property') }}
+                                    {{ __('View Details') }}
                                     <svg class="h-4 w-4 ml-2 transition-transform group-hover/btn:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
                                 </a>
                             </div>
