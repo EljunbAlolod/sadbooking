@@ -2,10 +2,10 @@
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <p class="text-sm font-medium text-indigo-600">{{ $boardingHouse->title }}</p>
+                <p class="text-sm font-medium text-pink-600">{{ $boardingHouse->title }}</p>
                 <h2 class="font-bold text-2xl text-slate-900 leading-tight">{{ __('Add New Room') }}</h2>
             </div>
-            <a href="{{ route('landlord.boarding-houses.show', $boardingHouse) }}" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors">
+            <a href="{{ route('landlord.boarding-houses.show', $boardingHouse) }}" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-pink-600 transition-colors">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                 {{ __('Back to listing') }}
             </a>
@@ -33,38 +33,38 @@
                     
                     <div class="space-y-6">
                         <div class="flex items-center gap-2 border-b border-slate-100 pb-2">
-                            <svg class="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                            <svg class="h-5 w-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
                             <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500">{{ __('Room Information') }}</h3>
                         </div>
 
                         <div class="grid gap-6 sm:grid-cols-2">
                             <div class="sm:col-span-2">
                                 <x-input-label for="room_number" :value="__('Room Number or Name')" />
-                                <x-text-input id="room_number" name="room_number" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('room_number')" required placeholder="e.g. Room 101, Attic Room" />
+                                <x-text-input id="room_number" name="room_number" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-pink-500 focus:ring-pink-500" :value="old('room_number')" required placeholder="e.g. Room 101, Attic Room" />
                                 <x-input-error :messages="$errors->get('room_number')" class="mt-2" />
                             </div>
 
                             <div>
                                 <x-input-label for="capacity" :value="__('Total Capacity')" />
-                                <x-text-input id="capacity" name="capacity" type="number" min="1" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('capacity', 1)" required />
+                                <x-text-input id="capacity" name="capacity" type="number" min="1" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-pink-500 focus:ring-pink-500" :value="old('capacity', 1)" required />
                                 <x-input-error :messages="$errors->get('capacity')" class="mt-2" />
                             </div>
 
                             <div>
                                 <x-input-label for="current_occupants" :value="__('Current Occupants')" />
-                                <x-text-input id="current_occupants" name="current_occupants" type="number" min="0" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('current_occupants', 0)" required />
+                                <x-text-input id="current_occupants" name="current_occupants" type="number" min="0" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-pink-500 focus:ring-pink-500" :value="old('current_occupants', 0)" required />
                                 <x-input-error :messages="$errors->get('current_occupants')" class="mt-2" />
                             </div>
 
                             <div>
                                 <x-input-label for="monthly_rate" :value="__('Monthly Rate (PHP)')" />
-                                <x-text-input id="monthly_rate" name="monthly_rate" type="number" step="0.01" min="0" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" :value="old('monthly_rate')" required placeholder="0.00" />
+                                <x-text-input id="monthly_rate" name="monthly_rate" type="number" step="0.01" min="0" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-pink-500 focus:ring-pink-500" :value="old('monthly_rate')" required placeholder="0.00" />
                                 <x-input-error :messages="$errors->get('monthly_rate')" class="mt-2" />
                             </div>
 
                             <div>
                                 <x-input-label for="status" :value="__('Initial Status')" />
-                                <select id="status" name="status" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+                                <select id="status" name="status" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-pink-500 focus:ring-pink-500 text-sm">
                                     @foreach (\App\Enums\RoomStatus::cases() as $status)
                                         <option value="{{ $status->value }}" @selected(old('status', \App\Enums\RoomStatus::Available->value) === $status->value)>{{ ucfirst($status->value) }}</option>
                                     @endforeach
@@ -74,7 +74,7 @@
                         </div>
 
                         <div class="flex items-center gap-2 border-b border-slate-100 pb-2 pt-4">
-                            <svg class="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                            <svg class="h-5 w-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                             <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500">{{ __('Amenities') }}</h3>
                         </div>
 
@@ -82,13 +82,13 @@
                             <x-input-label :value="__('Select Room Amenities')" />
                             <div class="mt-2 grid gap-3 sm:grid-cols-2">
                                 @foreach ($amenities as $amenity)
-                                    <label class="relative flex cursor-pointer rounded-xl border border-slate-200 bg-white p-3 shadow-sm hover:border-indigo-200 transition-all">
+                                    <label class="relative flex cursor-pointer rounded-xl border border-slate-200 bg-white p-3 shadow-sm hover:border-pink-200 transition-all">
                                         <input type="checkbox" name="amenity_ids[]" value="{{ $amenity->id }}" class="sr-only peer" @checked(in_array($amenity->id, old('amenity_ids', []), true))>
-                                        <div class="flex w-full items-center justify-between peer-checked:text-indigo-600">
+                                        <div class="flex w-full items-center justify-between peer-checked:text-pink-600">
                                             <span class="text-sm font-medium">{{ $amenity->name }}</span>
-                                            <svg class="h-5 w-5 opacity-0 peer-checked:opacity-100 transition-opacity text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                                            <svg class="h-5 w-5 opacity-0 peer-checked:opacity-100 transition-opacity text-pink-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
                                         </div>
-                                        <div class="absolute inset-0 rounded-xl border-2 border-transparent peer-checked:border-indigo-600 pointer-events-none"></div>
+                                        <div class="absolute inset-0 rounded-xl border-2 border-transparent peer-checked:border-pink-600 pointer-events-none"></div>
                                     </label>
                                 @endforeach
                             </div>
@@ -96,12 +96,12 @@
 
                         <div>
                             <x-input-label for="new_amenities" :value="__('Custom Room Amenities')" />
-                            <textarea id="new_amenities" name="new_amenities" rows="2" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="{{ __('e.g. Private sink, Cabinet, Desk') }}">{{ old('new_amenities') }}</textarea>
+                            <textarea id="new_amenities" name="new_amenities" rows="2" class="mt-1 block w-full rounded-xl border-slate-200 shadow-sm focus:border-pink-500 focus:ring-pink-500" placeholder="{{ __('e.g. Private sink, Cabinet, Desk') }}">{{ old('new_amenities') }}</textarea>
                             <x-input-error :messages="$errors->get('new_amenities')" class="mt-2" />
                         </div>
 
                         <div class="flex items-center gap-2 border-b border-slate-100 pb-2 pt-4">
-                            <svg class="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                            <svg class="h-5 w-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                             <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500">{{ __('Room Media') }}</h3>
                         </div>
 
@@ -135,7 +135,7 @@
 
                     <div class="flex flex-wrap items-center justify-end gap-4 border-t border-slate-100 pt-8">
                         <a href="{{ route('landlord.boarding-houses.show', $boardingHouse) }}" class="inline-flex items-center rounded-xl px-6 py-3 text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors">{{ __('Cancel') }}</a>
-                        <x-primary-button class="rounded-2xl px-8 py-3 bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition-all active:scale-95">
+                        <x-primary-button class="rounded-2xl px-8 py-3 bg-pink-600 hover:bg-pink-700 shadow-lg shadow-pink-200 transition-all active:scale-95">
                             {{ __('Save Room') }}
                         </x-primary-button>
                     </div>

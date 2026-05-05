@@ -60,6 +60,9 @@ class BoardingHouse extends Model
         return $this->hasMany(BoardingHousePhoto::class)->orderBy('sort_order');
     }
 
+    /**
+     * Get the accessible cover photo URL for the boarding house.
+     */
     public function photoUrl(): ?string
     {
         $firstPhoto = $this->photos->first();
@@ -75,7 +78,7 @@ class BoardingHouse extends Model
     }
 
     /**
-     * Get the count of available rooms.
+     * Get the count of rooms that currently have available capacity.
      */
     public function availableRoomsCount(): int
     {

@@ -29,7 +29,7 @@ class TenantDashboardController extends Controller
 
         $recommendedBoardingHouses = BoardingHouse::query()
             ->with(['amenities', 'rooms'])
-            ->whereHas('rooms', fn($q) => $q->where('status', RoomStatus::Available))
+            ->whereHas('rooms', fn ($q) => $q->where('status', RoomStatus::Available))
             ->orderByDesc('boarding_houses.created_at')
             ->limit(8)
             ->get();

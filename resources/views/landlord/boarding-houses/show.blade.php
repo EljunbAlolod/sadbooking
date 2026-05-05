@@ -2,11 +2,11 @@
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <p class="text-sm font-medium text-indigo-600 uppercase tracking-wider">{{ __('Property Details') }}</p>
+                <p class="text-sm font-medium text-pink-600 uppercase tracking-wider">{{ __('Property Details') }}</p>
                 <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ $boardingHouse->title }}</h2>
             </div>
             <div class="flex flex-wrap items-center gap-3">
-                <a href="{{ route('landlord.boarding-houses.rooms.index', $boardingHouse) }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-indigo-700 transition-all active:scale-95 shadow-lg shadow-indigo-200">
+                <a href="{{ route('landlord.boarding-houses.rooms.index', $boardingHouse) }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-pink-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-pink-700 transition-all active:scale-95 shadow-lg shadow-pink-200">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
                     {{ __('Manage Rooms') }}
                 </a>
@@ -123,7 +123,7 @@
                     <div class="lg:col-span-2 space-y-6">
                         <div class="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm sm:p-8">
                             <h3 class="flex items-center gap-2 text-lg font-bold text-slate-900 mb-4">
-                                <svg class="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg class="h-5 w-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                                 {{ __('Description') }}
@@ -133,7 +133,7 @@
 
                         <div class="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm sm:p-8">
                             <h3 class="flex items-center gap-2 text-lg font-bold text-slate-900 mb-4">
-                                <svg class="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg class="h-5 w-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                 </svg>
@@ -146,7 +146,7 @@
                     <div class="space-y-6">
                         <div class="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm sm:p-8">
                             <h3 class="flex items-center gap-2 text-lg font-bold text-slate-900 mb-4">
-                                <svg class="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg class="h-5 w-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.286-6.857L1 12l7.714-2.143L11 3z" />
                                 </svg>
                                 {{ __('Amenities') }}
@@ -154,7 +154,7 @@
                             @if ($boardingHouse->amenities->isNotEmpty())
                                 <div class="flex flex-wrap gap-2">
                                     @foreach($boardingHouse->amenities as $amenity)
-                                        <span class="inline-flex items-center gap-1.5 rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700 border border-indigo-100">
+                                        <span class="inline-flex items-center gap-1.5 rounded-full bg-pink-50 px-3 py-1 text-xs font-semibold text-pink-700 border border-pink-100">
                                             <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                                             {{ $amenity->name }}
                                         </span>

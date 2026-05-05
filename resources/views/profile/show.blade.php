@@ -2,10 +2,10 @@
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-sm font-medium uppercase text-indigo-600">{{ __('Boarding Hub') }}</p>
+                <p class="text-sm font-medium uppercase text-pink-600">{{ __('Boarding Hub') }}</p>
                 <h2 class="text-2xl font-semibold tracking-tight text-slate-900">{{ __('My Profile') }}</h2>
             </div>
-            <a href="{{ route('profile.edit') }}" class="inline-flex items-center px-4 py-2 bg-white border border-slate-200 rounded-xl font-semibold text-xs text-slate-700 uppercase tracking-widest shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+            <a href="{{ route('profile.edit') }}" class="inline-flex items-center px-4 py-2 bg-white border border-slate-200 rounded-xl font-semibold text-xs text-slate-700 uppercase tracking-widest shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition ease-in-out duration-150">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 {{ __('Edit Profile') }}
             </a>
@@ -17,7 +17,7 @@
             <!-- Profile Header -->
             <div class="bg-white p-6 sm:p-10 shadow-sm sm:rounded-2xl border border-slate-200 overflow-hidden relative">
                 <!-- Background Decoration -->
-                <div class="absolute top-0 right-0 -mt-4 -mr-4 h-32 w-32 bg-indigo-50 rounded-full opacity-50"></div>
+                <div class="absolute top-0 right-0 -mt-4 -mr-4 h-32 w-32 bg-pink-50 rounded-full opacity-50"></div>
                 <div class="absolute bottom-0 left-0 -mb-8 -ml-8 h-24 w-24 bg-purple-50 rounded-full opacity-50"></div>
 
                 <div class="relative flex flex-col sm:flex-row items-center gap-6">
@@ -28,7 +28,7 @@
                         <h3 class="text-3xl font-bold text-slate-900">{{ $user->name }}</h3>
                         <p class="text-slate-500 font-medium">{{ $user->email }}</p>
                         <div class="mt-4 flex flex-wrap justify-center sm:justify-start gap-2">
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-700 capitalize">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-pink-100 text-pink-700 capitalize">
                                 {{ str_replace('_', ' ', $user->role->value) }}
                             </span>
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600">
@@ -45,7 +45,7 @@
                 <div class="lg:col-span-1 space-y-6">
                     <div class="bg-white p-6 shadow-sm sm:rounded-2xl border border-slate-200">
                         <h4 class="text-lg font-semibold text-slate-900 mb-6 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                            <svg class="w-5 h-5 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                             {{ __('Account Details') }}
                         </h4>
                         <div class="space-y-6">
@@ -77,7 +77,7 @@
                         <div class="bg-white shadow-sm sm:rounded-2xl border border-slate-200 overflow-hidden">
                             <div class="p-6 border-b border-slate-100 bg-slate-50/30">
                                 <h4 class="text-lg font-semibold text-slate-900 flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                                    <svg class="w-5 h-5 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
                                     {{ __('Current Stay') }}
                                 </h4>
                             </div>
@@ -120,7 +120,7 @@
                                             </div>
 
                                             <div class="flex justify-end pt-2">
-                                                <a href="{{ route('tenant.reservations.show', $currentStay) }}" class="inline-flex items-center text-sm font-bold text-indigo-600 hover:text-indigo-500 transition-colors">
+                                                <a href="{{ route('tenant.reservations.show', $currentStay) }}" class="inline-flex items-center text-sm font-bold text-pink-600 hover:text-pink-500 transition-colors">
                                                     {{ __('View Stay Details') }}
                                                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                                                 </a>
@@ -135,7 +135,7 @@
                                         <h5 class="text-lg font-bold text-slate-900 mb-2">{{ __('No Active Stay') }}</h5>
                                         <p class="text-slate-500 max-w-xs mx-auto text-sm">{{ __('You don\'t have any active room reservations at the moment.') }}</p>
                                         <div class="mt-8">
-                                            <a href="{{ route('boarding-houses.index') }}" class="inline-flex items-center px-6 py-3 bg-indigo-600 text-white font-bold text-sm rounded-2xl shadow-lg shadow-indigo-200 hover:bg-indigo-700 hover:shadow-indigo-300 transition-all active:scale-95">
+                                            <a href="{{ route('boarding-houses.index') }}" class="inline-flex items-center px-6 py-3 bg-pink-600 text-white font-bold text-sm rounded-2xl shadow-lg shadow-pink-200 hover:bg-pink-700 hover:shadow-pink-300 transition-all active:scale-95">
                                                 {{ __('Explore Stays') }}
                                             </a>
                                         </div>

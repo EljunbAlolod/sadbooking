@@ -2,12 +2,12 @@
     <x-slot name="header">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <p class="text-sm font-medium text-indigo-600 uppercase tracking-wider">{{ __('Boarding Hub') }}</p>
+                <p class="text-sm font-medium text-pink-600 uppercase tracking-wider">{{ __('Boarding Hub') }}</p>
                 <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ __('My Boarding Houses') }}</h2>
             </div>
             <a href="{{ route('landlord.boarding-houses.create') }}">
                 <x-primary-button type="button"
-                    class="rounded-2xl px-6 py-3 bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition-all active:scale-95">
+                    class="rounded-2xl px-6 py-3 bg-pink-600 hover:bg-pink-700 shadow-lg shadow-pink-200 transition-all active:scale-95">
                     <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
@@ -22,7 +22,7 @@
             <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 @forelse ($boardingHouses as $house)
                     <div
-                        class="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm hover:shadow-xl hover:border-indigo-200 transition-all duration-300">
+                        class="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm hover:shadow-xl hover:border-pink-200 transition-all duration-300">
                         <!-- Property Image -->
                         <div class="relative h-56 w-full overflow-hidden bg-slate-100">
                             @if ($house->photoUrl())
@@ -53,7 +53,7 @@
                         <div class="flex flex-1 flex-col p-6">
                             <div class="flex-1">
                                 <h3
-                                    class="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors line-clamp-1">
+                                    class="text-xl font-bold text-slate-900 group-hover:text-pink-600 transition-colors line-clamp-1">
                                     {{ $house->title }}
                                 </h3>
                                 <p class="mt-2 flex items-start gap-1.5 text-sm text-slate-600">
@@ -69,7 +69,7 @@
 
                                 <div class="mt-4 flex items-center gap-4 border-t border-slate-100 pt-4">
                                     <div class="flex items-center gap-1.5 text-sm font-medium text-slate-700">
-                                        <svg class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24"
+                                        <svg class="h-4 w-4 text-pink-500" fill="none" viewBox="0 0 24 24"
                                             stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -82,7 +82,7 @@
                             <!-- Actions -->
                             <div class="mt-6 flex items-center gap-2 border-t border-slate-100 pt-6">
                                 <a href="{{ route('landlord.boarding-houses.rooms.index', $house) }}"
-                                    class="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-indigo-600 px-4 py-2 text-xs font-bold text-white hover:bg-indigo-700 transition-all active:scale-95 shadow-sm shadow-indigo-100">
+                                    class="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-pink-600 px-4 py-2 text-xs font-bold text-white hover:bg-pink-700 transition-all active:scale-95 shadow-sm shadow-pink-100">
                                     <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
@@ -129,7 +129,7 @@
                             {{ __('Create your first property listing to start managing your rooms and tenants.') }}</p>
                         <div class="mt-8">
                             <a href="{{ route('landlord.boarding-houses.create') }}"
-                                class="inline-flex items-center rounded-2xl bg-indigo-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-100 transition-all hover:bg-indigo-700 active:scale-95">
+                                class="inline-flex items-center rounded-2xl bg-pink-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-pink-100 transition-all hover:bg-pink-700 active:scale-95">
                                 {{ __('Create My First Listing') }}
                             </a>
                         </div>

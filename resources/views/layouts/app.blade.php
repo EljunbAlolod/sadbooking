@@ -6,7 +6,7 @@
 </head>
 
 <body class="font-sans antialiased text-slate-900 overflow-hidden">
-    <div x-data="{ sidebarOpen: false }" class="h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50/40">
+    <div x-data="{ sidebarOpen: false }" class="h-screen bg-gradient-to-br from-slate-50 via-white to-pink-50/40">
         <div x-show="sidebarOpen" x-cloak class="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm lg:hidden"
             @click="sidebarOpen = false"></div>
 
@@ -40,6 +40,7 @@
             </div>
         </div>
     </div>
+    @stack('scripts')
 </body>
 
 </html>

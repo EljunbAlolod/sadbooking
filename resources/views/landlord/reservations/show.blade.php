@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <p class="text-sm font-medium text-indigo-600 uppercase tracking-wider">{{ __('Reservation Details') }}</p>
+                <p class="text-sm font-medium text-pink-600 uppercase tracking-wider">{{ __('Reservation Details') }}</p>
                 <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ $reservation->tenant->name }}</h2>
                 <p class="mt-2 text-sm text-slate-600 max-w-2xl">{{ __('Complete details of the reservation request and property info.') }}</p>
             </div>
@@ -32,7 +32,7 @@
                     \App\Enums\ReservationStatus::Pending => 'bg-amber-50 text-amber-700 border-amber-100',
                     \App\Enums\ReservationStatus::Approved => 'bg-emerald-50 text-emerald-700 border-emerald-100',
                     \App\Enums\ReservationStatus::Rejected => 'bg-rose-50 text-rose-700 border-rose-100',
-                    \App\Enums\ReservationStatus::Active => 'bg-indigo-50 text-indigo-700 border-indigo-100',
+                    \App\Enums\ReservationStatus::Active => 'bg-pink-50 text-pink-700 border-pink-100',
                     \App\Enums\ReservationStatus::Completed => 'bg-slate-50 text-slate-600 border-slate-200',
                     \App\Enums\ReservationStatus::Cancelled => 'bg-slate-100 text-slate-500 border-slate-200',
                 };
@@ -53,7 +53,7 @@
                         <div class="rounded-2xl bg-white/95 backdrop-blur-md p-4 shadow-xl border border-white/20">
                             <h3 class="text-xl font-black text-slate-900 leading-none">{{ $reservation->room->boardingHouse->title }} — {{ __('Room') }} {{ $reservation->room->room_number }}</h3>
                             <p class="mt-2 text-sm font-medium text-slate-500 flex items-center gap-1.5">
-                                <svg class="h-4 w-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                                <svg class="h-4 w-4 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                                 {{ $reservation->room->boardingHouse->full_address }}
                             </p>
                         </div>
@@ -73,7 +73,7 @@
                             <div>
                                 <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">{{ __('Tenant Information') }}</h4>
                                 <div class="flex items-center gap-4">
-                                    <div class="h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold">
+                                    <div class="h-12 w-12 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold">
                                         {{ substr($reservation->tenant->name, 0, 1) }}
                                     </div>
                                     <div>
@@ -94,7 +94,7 @@
                                         @if($reservation->end_date)
                                             {{ $reservation->end_date->format('l, M j, Y') }}
                                         @else
-                                            <span class="italic text-indigo-500">{{ __('Ongoing Stay') }}</span>
+                                            <span class="italic text-pink-500">{{ __('Ongoing Stay') }}</span>
                                         @endif
                                     </p>
                                 </div>
@@ -112,7 +112,7 @@
                                     </div>
                                     <div class="flex items-center justify-between">
                                         <span class="text-sm text-slate-500">{{ __('Monthly Rate') }}</span>
-                                        <span class="text-sm font-bold text-indigo-600">₱{{ number_format($reservation->room->monthly_rate, 2) }}</span>
+                                        <span class="text-sm font-bold text-pink-600">₱{{ number_format($reservation->room->monthly_rate, 2) }}</span>
                                     </div>
                                     <div class="flex items-center justify-between">
                                         <span class="text-sm text-slate-500">{{ __('Capacity') }}</span>
@@ -140,7 +140,7 @@
                         <div class="mt-12 pt-8 border-t border-slate-100 flex flex-wrap gap-4">
                             <form method="POST" action="{{ route('landlord.reservations.approve', $reservation) }}" class="flex-1">
                                 @csrf
-                                <button type="submit" class="w-full inline-flex items-center justify-center rounded-2xl bg-indigo-600 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-200 transition-all hover:bg-indigo-700 active:scale-95">
+                                <button type="submit" class="w-full inline-flex items-center justify-center rounded-2xl bg-pink-600 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-pink-200 transition-all hover:bg-pink-700 active:scale-95">
                                     <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                                     {{ __('Approve Reservation') }}
                                 </button>

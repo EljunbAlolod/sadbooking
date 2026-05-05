@@ -2,10 +2,10 @@
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-sm font-medium text-indigo-600">{{ __('Profile Account') }}</p>
+                <p class="text-sm font-medium text-pink-600">{{ __('Profile Account') }}</p>
                 <h2 class="text-2xl font-semibold tracking-tight text-slate-900">{{ __('Edit Settings') }}</h2>
             </div>
-            <a href="{{ route('profile.show') }}" class="inline-flex items-center px-4 py-2 bg-white border border-slate-200 rounded-xl font-semibold text-xs text-slate-700 uppercase tracking-widest shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+            <a href="{{ route('profile.show') }}" class="inline-flex items-center px-4 py-2 bg-white border border-slate-200 rounded-xl font-semibold text-xs text-slate-700 uppercase tracking-widest shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition ease-in-out duration-150">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                 {{ __('Back to Profile') }}
             </a>
@@ -18,10 +18,10 @@
                 <!-- Sidebar Info -->
                 <div class="lg:col-span-1">
                     <div class="sticky top-24 space-y-4">
-                        <div class="bg-indigo-600 rounded-3xl p-8 text-white shadow-xl shadow-indigo-200 relative overflow-hidden">
+                        <div class="bg-pink-600 rounded-3xl p-8 text-white shadow-xl shadow-pink-200 relative overflow-hidden">
                             <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
                             <h3 class="text-xl font-bold mb-2">{{ __('Security & Identity') }}</h3>
-                            <p class="text-indigo-100 text-sm leading-relaxed">
+                            <p class="text-pink-100 text-sm leading-relaxed">
                                 {{ __('Update your personal information, manage your password, and keep your account secure.') }}
                             </p>
                         </div>
