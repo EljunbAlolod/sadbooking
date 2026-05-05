@@ -33,7 +33,7 @@ class LandlordDashboardController extends Controller
             ->whereHas('room.boardingHouse', fn ($q) => $q->where('landlord_id', $landlord->id))
             ->with(['tenant', 'room.boardingHouse'])
             ->latest()
-            ->limit(12)
+            ->limit(3)
             ->get();
 
         return view('landlord.dashboard', [

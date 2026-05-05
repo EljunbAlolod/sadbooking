@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-sm font-medium text-indigo-600">{{ __('Profile Account') }}</p>
+                <p class="text-sm font-medium uppercase text-indigo-600">{{ __('Boarding Hub') }}</p>
                 <h2 class="text-2xl font-semibold tracking-tight text-slate-900">{{ __('My Profile') }}</h2>
             </div>
             <a href="{{ route('profile.edit') }}" class="inline-flex items-center px-4 py-2 bg-white border border-slate-200 rounded-xl font-semibold text-xs text-slate-700 uppercase tracking-widest shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
