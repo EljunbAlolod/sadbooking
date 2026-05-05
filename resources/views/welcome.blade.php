@@ -88,7 +88,7 @@
                         <div
                             class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-50 text-pink-600 text-xs font-bold uppercase tracking-wider mb-6 animate-fade-in">
                             <span class="flex h-2 w-2 rounded-full bg-pink-600"></span>
-                            Verified Boarding Houses Only
+                             Boarding Houses
                         </div>
                         <h1 class="text-5xl lg:text-7xl font-bold text-slate-900 leading-[1.1] mb-8">
                             Find your perfect <span
@@ -96,7 +96,7 @@
                                 away from home.</span>
                         </h1>
                         <p class="text-lg text-slate-600 leading-relaxed mb-10 lg:max-w-xl">
-                            Discover high-quality, verified boarding houses and rooms tailored to your needs.
+                            Discover high-quality, boarding houses and rooms tailored to your needs.
                             Affordable, convenient, and safe for students and professionals.
                         </p>
 
@@ -195,7 +195,7 @@
                                 </path>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-4">Verified Listings</h3>
+                        <h3 class="text-xl font-bold text-slate-900 mb-4"> Listings</h3>
                         <p class="text-slate-600 leading-relaxed">Every property and landlord is manually verified by
                             our team to ensure your safety and peace of mind.</p>
                     </div>
