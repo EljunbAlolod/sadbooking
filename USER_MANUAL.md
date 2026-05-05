@@ -12,6 +12,7 @@ Welcome to **Boarding Hub**, the premium platform for managing and finding quali
 4. [Super Admin Guide](#super-admin-guide)
 5. [Database Architecture (ERD)](#database-architecture-erd)
 6. [Common Features](#common-features)
+7. [Legal & Schema](DATABASE_SCHEMA.md)
 
 ---
 
