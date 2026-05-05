@@ -39,6 +39,15 @@ class LandlordReservationController extends Controller
         return view('landlord.reservations.history', ['reservations' => $reservations]);
     }
 
+    public function show(Request $request, Reservation $reservation): View
+    {
+        $this->authorizeLandlordAccess($request, $reservation);
+
+        $reservation->load(['tenant', 'room.boardingHouse', 'room.photos']);
+
+        return view('landlord.reservations.show', ['reservation' => $reservation]);
+    }
+
     public function approve(Request $request, Reservation $reservation): RedirectResponse
     {
         $this->authorizeLandlordReservation($request, $reservation);
@@ -64,6 +73,23 @@ class LandlordReservationController extends Controller
         $reservation->room->syncOccupantCountFromReservations();
 
         return back()->with('status', __('Reservation rejected.'));
+    }
+
+    public function destroy(Request $request, Reservation $reservation): RedirectResponse
+    {
+        $this->authorizeLandlordAccess($request, $reservation);
+
+        $reservation->delete();
+
+        return redirect()->route('landlord.reservations.index')->with('status', __('Reservation deleted.'));
+    }
+
+    private function authorizeLandlordAccess(Request $request, Reservation $reservation): void
+    {
+        $reservation->load('room.boardingHouse');
+        if ((int) $reservation->room->boardingHouse->landlord_id !== (int) $request->user()->id) {
+            abort(403);
+        }
     }
 
     private function authorizeLandlordReservation(Request $request, Reservation $reservation): void

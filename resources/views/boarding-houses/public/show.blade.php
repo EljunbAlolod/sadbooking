@@ -158,8 +158,16 @@
                                                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                                                 </div>
                                                 <div>
-                                                    <p class="text-[10px] uppercase tracking-wider font-bold text-slate-400">{{ __('Amenities') }}</p>
-                                                    <span class="text-sm font-bold text-slate-700">{{ $room->amenities->count() }} total</span>
+                                                    <div class="flex flex-wrap gap-1.5 mt-2">
+                                                    @foreach($room->amenities->take(3) as $amenity)
+                                                        <span class="inline-flex rounded-lg bg-indigo-50 px-2 py-0.5 text-[10px] font-bold text-indigo-600 uppercase tracking-wider border border-indigo-100">
+                                                            {{ $amenity->name }}
+                                                        </span>
+                                                    @endforeach
+                                                    @if($room->amenities->count() > 3)
+                                                        <span class="text-[10px] font-bold text-slate-400 self-center">+{{ $room->amenities->count() - 3 }}</span>
+                                                    @endif
+                                                </div>
                                                 </div>
                                             </div>
                                         </div>

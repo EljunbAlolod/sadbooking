@@ -2,8 +2,8 @@
     <x-slot name="header">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <p class="text-sm font-medium text-indigo-600 uppercase tracking-wider">{{ __('Management') }}</p>
-                <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ __('Current Boarders') }}</h2>
+                <p class="text-sm font-medium text-indigo-600 uppercase tracking-wider">{{ __('Boarding Hub') }}</p>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ __('Current Tenants') }}</h2>
                 <p class="mt-2 text-sm text-slate-600 max-w-2xl">{{ __('Manage your active tenants, their stay periods, and property assignments.') }}</p>
             </div>
             <div class="hidden sm:block">
