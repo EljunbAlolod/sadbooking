@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <p class="text-sm font-medium text-indigo-600 uppercase tracking-wider">{{ __('Tenant Dashboard') }}</p>
+                <p class="text-sm font-medium text-indigo-600 uppercase tracking-wider">{{ __('Boarding Hub') }}</p>
                 <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ __('Bill Notices') }}</h2>
                 <p class="mt-2 text-sm text-slate-600 max-w-2xl">{{ __('Track your monthly boarding house fees, electric, water, and other utilities issued by your landlord.') }}</p>
             </div>
@@ -21,7 +21,7 @@
                     <table class="min-w-full divide-y divide-slate-100">
                         <thead>
                             <tr class="bg-slate-50/80 text-left text-[10px] font-bold uppercase tracking-widest text-slate-500">
-                                <th class="px-8 py-5">{{ __('Property & Room') }}</th>
+                                <th class="px-8 py-5">{{ __('Boarding Housegit  & Room') }}</th>
                                 <th class="px-6 py-5">{{ __('Bill Details') }}</th>
                                 <th class="px-6 py-5">{{ __('Amount') }}</th>
                                 <th class="px-6 py-5">{{ __('Timeline') }}</th>
