@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RoomStatus;
 use Database\Factories\BoardingHouseFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -71,5 +72,16 @@ class BoardingHouse extends Model
         }
 
         return Storage::disk('public')->url($this->photo_path);
+    }
+
+    /**
+     * Get the count of available rooms.
+     */
+    public function availableRoomsCount(): int
+    {
+        return $this->rooms()
+            ->where('status', RoomStatus::Available)
+            ->whereColumn('current_occupants', '<', 'capacity')
+            ->count();
     }
 }
