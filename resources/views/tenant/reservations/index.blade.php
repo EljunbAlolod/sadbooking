@@ -27,7 +27,7 @@
                     <table class="min-w-full divide-y divide-slate-100">
                         <thead>
                             <tr class="bg-slate-50/80 text-left text-[10px] font-bold uppercase tracking-widest text-slate-500">
-                                <th class="px-8 py-5 sm:px-10">{{ __('Property & Room') }}</th>
+                                <th class="px-8 py-5 sm:px-10">{{ __('Boarding House & Room') }}</th>
                                 <th class="px-6 py-5">{{ __('Stay Period') }}</th>
                                 <th class="px-6 py-5">{{ __('Monthly Rate') }}</th>
                                 <th class="px-6 py-5">{{ __('Status') }}</th>

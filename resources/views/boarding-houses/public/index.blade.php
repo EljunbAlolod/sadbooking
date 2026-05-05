@@ -19,42 +19,68 @@
             <!-- Filter Section -->
             <div class="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-xl">
                 <div class="p-8 sm:p-10">
-                    <form method="GET" action="{{ route('boarding-houses.index') }}" class="grid gap-8 lg:grid-cols-4">
+                    <form id="filterForm" method="GET" action="{{ route('boarding-houses.index') }}" class="grid gap-8 lg:grid-cols-4">
+                        <!-- Location Search -->
                         <div class="lg:col-span-1">
                             <label for="location" class="flex items-center gap-2 text-sm font-bold text-slate-900 mb-2">
                                 <svg class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                                 {{ __('Location') }}
                             </label>
-                            <x-text-input id="location" class="block w-full rounded-2xl border-slate-200 bg-slate-50/50 py-3 transition-all focus:border-indigo-500 focus:ring-indigo-500" type="text" name="location" :value="old('location', $filters['location'] ?? '')" placeholder="City or address..." />
+                            <x-text-input id="location" class="block w-full rounded-2xl border-slate-200 bg-slate-50/50 py-3 transition-all focus:border-indigo-500 focus:ring-indigo-500" type="text" name="location" :value="old('location', $filters['location'] ?? '')" placeholder="Street, barangay, city, or province..." />
                         </div>
                         
+                        <!-- Budget Range Dropdown -->
                         <div class="lg:col-span-1">
-                            <label for="max_rate" class="flex items-center gap-2 text-sm font-bold text-slate-900 mb-2">
+                            <label for="budget_range" class="flex items-center gap-2 text-sm font-bold text-slate-900 mb-2">
                                 <svg class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                {{ __('Max Rate') }}
+                                {{ __('Budget Range') }}
                             </label>
-                            <x-text-input id="max_rate" class="block w-full rounded-2xl border-slate-200 bg-slate-50/50 py-3 transition-all focus:border-indigo-500 focus:ring-indigo-500" type="number" step="0.01" name="max_rate" :value="old('max_rate', $filters['max_rate'] ?? '')" placeholder="Budget limit..." />
+                            <select id="budget_range" name="budget_range" class="block w-full rounded-2xl border border-slate-200 bg-slate-50/50 py-3 px-4 transition-all focus:border-indigo-500 focus:ring-indigo-500 text-slate-900 font-medium">
+                                <option value="">{{ __('Any Budget') }}</option>
+                                <option value="1-1000" @selected(($filters['budget_range'] ?? '') === '1-1000')>{{ __('₱1 - ₱1,000') }}</option>
+                                <option value="1001-2000" @selected(($filters['budget_range'] ?? '') === '1001-2000')>{{ __('₱1,001 - ₱2,000') }}</option>
+                                <option value="2001-3000" @selected(($filters['budget_range'] ?? '') === '2001-3000')>{{ __('₱2,001 - ₱3,000') }}</option>
+                                <option value="3001-4000" @selected(($filters['budget_range'] ?? '') === '3001-4000')>{{ __('₱3,001 - ₱4,000') }}</option>
+                                <option value="4001-5000" @selected(($filters['budget_range'] ?? '') === '4001-5000')>{{ __('₱4,001 - ₱5,000') }}</option>
+                                <option value="5001+" @selected(($filters['budget_range'] ?? '') === '5001+')>{{ __('₱5,001 and above') }}</option>
+                            </select>
                         </div>
 
-                        <div class="lg:col-span-1">
-                            <label class="flex items-center gap-2 text-sm font-bold text-slate-900 mb-2">
+                        <!-- Amenities Filter -->
+                        <div class="lg:col-span-2">
+                            <label class="flex items-center gap-2 text-sm font-bold text-slate-900 mb-3">
                                 <svg class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                                 {{ __('Amenities') }}
                             </label>
-                            <div class="flex flex-wrap gap-2 max-h-24 overflow-y-auto pr-2 custom-scrollbar">
+                            <div class="flex flex-wrap gap-3 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
                                 @foreach ($allAmenities as $amenity)
-                                    <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50/50 text-xs font-semibold text-slate-600 cursor-pointer hover:bg-white hover:border-indigo-200 transition-all">
-                                        <input type="checkbox" name="amenities[]" value="{{ $amenity->id }}" class="rounded text-indigo-600 focus:ring-indigo-500" @checked(in_array($amenity->id, old('amenities', $filters['amenities'] ?? []), true))>
-                                        <span>{{ $amenity->name }}</span>
-                                    </label>
+                                    <div class="relative">
+                                        <input 
+                                            type="checkbox" 
+                                            id="amenity_{{ $amenity->id }}" 
+                                            name="amenities[]" 
+                                            value="{{ $amenity->id }}"
+                                            class="peer hidden amenity-checkbox"
+                                            @checked(in_array($amenity->id, old('amenities', $filters['amenities'] ?? []), true))
+                                        >
+                                        <label for="amenity_{{ $amenity->id }}" class="flex cursor-pointer items-center gap-2 rounded-xl border-2 border-slate-100 bg-white px-4 py-2.5 text-sm font-bold text-slate-600 transition-all hover:border-indigo-200 hover:bg-slate-50 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 peer-checked:shadow-md peer-checked:shadow-indigo-100">
+                                            <span class="flex h-5 w-5 items-center justify-center rounded-lg bg-slate-100 text-slate-400 transition-colors peer-checked:bg-indigo-600 peer-checked:text-white group-hover:bg-indigo-100">
+                                                <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                                                </svg>
+                                            </span>
+                                            {{ $amenity->name }}
+                                        </label>
+                                    </div>
                                 @endforeach
                             </div>
                         </div>
 
-                        <div class="flex items-end gap-3 lg:col-span-1">
+                        <!-- Action Buttons -->
+                        <div class="flex items-end gap-3 lg:col-span-4 lg:col-span-0">
                             <button type="submit" class="flex-1 inline-flex items-center justify-center rounded-2xl bg-indigo-600 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-200 transition-all hover:bg-indigo-700 active:scale-95">
                                 <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                                {{ __('Filter') }}
+                                {{ __('Search') }}
                             </button>
                             <a href="{{ route('boarding-houses.index') }}" class="inline-flex h-13 items-center justify-center rounded-2xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-400 hover:text-rose-500 transition-colors" title="{{ __('Reset Filters') }}">
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
@@ -151,4 +177,144 @@
             @endif
         </div>
     </div>
+
+    <style>
+        .amenity-checkbox:checked + label span {
+            @apply bg-indigo-600 text-white;
+        }
+
+        .custom-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(226, 232, 240, 0.5) transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(226, 232, 240, 0.5);
+            border-radius: 3px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(226, 232, 240, 0.8);
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterForm = document.getElementById('filterForm');
+            const checkboxes = document.querySelectorAll('.amenity-checkbox');
+            const submitBtn = filterForm.querySelector('button[type="submit"]');
+            
+            // Handle amenity checkbox changes - optional auto-submit
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    // Uncomment line below for auto-submit on amenity change
+                    // filterForm.submit();
+                });
+            });
+
+            // Handle budget range change - auto-submit
+            const budgetRange = document.getElementById('budget_range');
+            budgetRange?.addEventListener('change', function() {
+                filterForm.submit();
+            });
+
+            // Handle form submission with AJAX
+            async function updateResults() {
+                const formData = new FormData(filterForm);
+                const queryParams = new URLSearchParams(formData);
+                
+                const resultsContainer = document.querySelector('div.grid.gap-8.sm\\:grid-cols-2');
+                if (resultsContainer) {
+                    resultsContainer.classList.add('opacity-50', 'pointer-events-none');
+                }
+
+                try {
+                    const response = await fetch(`{{ route('boarding-houses.index') }}?${queryParams.toString()}`, {
+                        headers: {
+                            'Accept': 'text/html',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const html = await response.text();
+                        const parser = new DOMParser();
+                        const newDoc = parser.parseFromString(html, 'text/html');
+                        
+                        const currentResults = document.querySelector('div.py-10.bg-slate-50\\/50.min-h-screen');
+                        const newResults = newDoc.querySelector('div.py-10.bg-slate-50\\/50.min-h-screen');
+                        
+                        if (currentResults && newResults) {
+                            const resultsWrapper = currentResults.querySelector('div.max-w-7xl');
+                            const newResultsWrapper = newResults.querySelector('div.max-w-7xl');
+                            
+                            if (resultsWrapper && newResultsWrapper) {
+                                // Preserve the filter form state
+                                const oldForm = resultsWrapper.querySelector('#filterForm');
+                                const newContent = newResultsWrapper.querySelector('.grid.gap-8.sm\\:grid-cols-2');
+                                const newPagination = newResultsWrapper.querySelector('.pt-10');
+                                
+                                const gridContainer = resultsWrapper.querySelector('.grid.gap-8.sm\\:grid-cols-2');
+                                const paginationContainer = resultsWrapper.querySelector('.pt-10');
+                                
+                                if (gridContainer && newContent) {
+                                    gridContainer.outerHTML = newContent.outerHTML;
+                                }
+                                if (paginationContainer && newPagination) {
+                                    paginationContainer.outerHTML = newPagination.outerHTML;
+                                } else if (paginationContainer) {
+                                    paginationContainer.remove();
+                                } else if (newPagination) {
+                                    resultsWrapper.appendChild(newPagination);
+                                }
+                            }
+                        }
+                        
+                        window.history.pushState({}, '', `{{ route('boarding-houses.index') }}?${queryParams.toString()}`);
+                    }
+                } catch (error) {
+                    console.error('Filter error:', error);
+                } finally {
+                    if (resultsContainer) {
+                        resultsContainer.classList.remove('opacity-50', 'pointer-events-none');
+                    }
+                }
+            }
+
+            filterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                updateResults();
+            });
+
+            budgetRange?.addEventListener('change', updateResults);
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateResults);
+            });
+
+            // Input delay for location search
+            let timeout = null;
+            document.getElementById('location').addEventListener('input', function() {
+                clearTimeout(timeout);
+                timeout = setTimeout(updateResults, 500);
+            });
+
+            // Handle pagination link clicks with AJAX
+            document.addEventListener('click', function(e) {
+                const paginationLink = e.target.closest('a[href*="?page="]');
+                if (paginationLink && paginationLink.origin === window.location.origin) {
+                    e.preventDefault();
+                    window.location.href = paginationLink.href; // Simplified for now
+                }
+            });
+        });
+    </script>
 </x-app-layout>
