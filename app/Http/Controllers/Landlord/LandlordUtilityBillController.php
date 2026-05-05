@@ -97,6 +97,89 @@ class LandlordUtilityBillController extends Controller
         return redirect()->route('landlord.bills.index')->with('status', __('Bill notice created.'));
     }
 
+    public function edit(Request $request, UtilityBill $utility_bill): View
+    {
+        $landlordId = $request->user()->id;
+
+        $utility_bill->load('room.boardingHouse');
+        if ((int) $utility_bill->room->boardingHouse->landlord_id !== (int) $landlordId) {
+            abort(403);
+        }
+
+        $tenantOptions = Reservation::query()
+            ->with(['tenant', 'room.boardingHouse'])
+            ->whereHas('room.boardingHouse', fn ($q) => $q->where('landlord_id', $landlordId))
+            ->whereIn('status', [ReservationStatus::Approved, ReservationStatus::Active])
+            ->get()
+            ->unique('tenant_id');
+
+        $rooms = Room::query()
+            ->with('boardingHouse')
+            ->whereHas('boardingHouse', fn ($q) => $q->where('landlord_id', $landlordId))
+            ->orderBy('boarding_house_id')
+            ->orderBy('room_number')
+            ->get();
+
+        return view('landlord.bills.edit', [
+            'bill' => $utility_bill,
+            'tenantOptions' => $tenantOptions,
+            'rooms' => $rooms,
+        ]);
+    }
+
+    public function update(Request $request, UtilityBill $utility_bill): RedirectResponse
+    {
+        $landlordId = $request->user()->id;
+
+        $utility_bill->load('room.boardingHouse');
+        if ((int) $utility_bill->room->boardingHouse->landlord_id !== (int) $landlordId) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'tenant_id' => ['required', 'integer', 'exists:users,id'],
+            'room_id' => ['required', 'integer', 'exists:rooms,id'],
+            'bill_type' => ['required', Rule::enum(UtilityBillType::class)],
+            'amount' => ['required', 'numeric', 'min:0'],
+            'billing_month' => ['required', 'date'],
+            'due_date' => ['required', 'date'],
+            'status' => ['required', Rule::enum(UtilityBillStatus::class)],
+        ]);
+
+        $room = Room::query()
+            ->whereKey($validated['room_id'])
+            ->whereHas('boardingHouse', fn ($q) => $q->where('landlord_id', $landlordId))
+            ->firstOrFail();
+
+        $hasStay = Reservation::query()
+            ->where('tenant_id', $validated['tenant_id'])
+            ->where('room_id', $room->id)
+            ->whereIn('status', [ReservationStatus::Approved, ReservationStatus::Active])
+            ->exists();
+
+        if (! $hasStay) {
+            return back()->withInput()->with('error', __('Selected tenant is not assigned to that room.'));
+        }
+
+        $utility_bill->update($validated);
+
+        return redirect()->route('landlord.bills.index')->with('status', __('Bill notice updated.'));
+    }
+
+    public function destroy(Request $request, UtilityBill $utility_bill): RedirectResponse
+    {
+        $landlordId = $request->user()->id;
+
+        $utility_bill->load('room.boardingHouse');
+        if ((int) $utility_bill->room->boardingHouse->landlord_id !== (int) $landlordId) {
+            abort(403);
+        }
+
+        $utility_bill->delete();
+
+        return redirect()->route('landlord.bills.index')->with('status', __('Bill notice deleted.'));
+    }
+
     public function markPaid(Request $request, UtilityBill $utility_bill): RedirectResponse
     {
         $landlordId = $request->user()->id;

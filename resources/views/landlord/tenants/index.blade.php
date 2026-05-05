@@ -2,12 +2,12 @@
     <x-slot name="header">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <p class="text-sm font-medium text-purple-600 uppercase tracking-wider">{{ __('Management') }}</p>
-                <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ __('Current Boarders') }}</h2>
+                <p class="text-sm font-medium text-indigo-600 uppercase tracking-wider">{{ __('Boarding Hub') }}</p>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ __('Current Tenants') }}</h2>
                 <p class="mt-2 text-sm text-slate-600 max-w-2xl">{{ __('Manage your active tenants, their stay periods, and property assignments.') }}</p>
             </div>
             <div class="hidden sm:block">
-                <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-50 text-purple-600 shadow-sm">
+                <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 shadow-sm">
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                                 <tr class="group hover:bg-slate-50/50 transition-colors">
                                     <td class="px-8 py-6 sm:px-10">
                                         <div class="flex items-center gap-4">
-                                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-slate-500 group-hover:bg-purple-100 group-hover:text-purple-600 transition-colors">
+                                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-slate-500 group-hover:bg-indigo-100 group-hover:text-indigo-600 transition-colors">
                                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                                             </div>
                                             <div>
@@ -85,7 +85,7 @@
                                     <td class="px-8 py-6 text-end sm:px-10">
                                         <form action="{{ route('landlord.tenants.remove', $reservation) }}" method="POST" onsubmit="return confirm('{{ __('Are you sure you want to remove this tenant? This will mark their stay as completed.') }}')" class="inline">
                                             @csrf
-                                            <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-purple-600 px-4 py-2 text-xs font-bold text-white hover:bg-purple-700 transition-all active:scale-95 shadow-lg shadow-purple-100">
+                                            <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-4 py-2 text-xs font-bold text-white hover:bg-indigo-700 transition-all active:scale-95 shadow-lg shadow-indigo-100">
                                                 <svg class="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                                                 {{ __('Evict/Remove') }}
                                             </button>

@@ -3,8 +3,8 @@
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <p class="text-sm font-medium text-indigo-600 uppercase tracking-wider">{{ __('Billing Management') }}</p>
-                <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ __('Send Bill Notice') }}</h2>
-                <p class="mt-2 text-sm text-slate-600 max-w-2xl">{{ __('Create and send utility or monthly fee notices to your active tenants.') }}</p>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ __('Edit Bill Notice') }}</h2>
+                <p class="mt-2 text-sm text-slate-600 max-w-2xl">{{ __('Update the details of the bill notice for your tenant.') }}</p>
             </div>
             <a href="{{ route('landlord.bills.index') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
@@ -17,8 +17,9 @@
         <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
             <div class="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-xl">
                 <div class="p-8 sm:p-10">
-                    <form method="POST" action="{{ route('landlord.bills.store') }}" class="space-y-8">
+                    <form method="POST" action="{{ route('landlord.bills.update', $bill) }}" class="space-y-8">
                         @csrf
+                        @method('PUT')
                         
                         <div class="grid gap-8 sm:grid-cols-2">
                             <!-- Tenant Selection -->
@@ -30,7 +31,7 @@
                                 <select id="tenant_id" name="tenant_id" class="mt-1 block w-full rounded-2xl border-slate-200 bg-slate-50/50 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-all" required>
                                     <option value="">{{ __('Select an active tenant') }}</option>
                                     @foreach ($tenantOptions as $reservation)
-                                        <option value="{{ $reservation->tenant_id }}" @selected(old('tenant_id') == $reservation->tenant_id)>
+                                        <option value="{{ $reservation->tenant_id }}" @selected(old('tenant_id', $bill->tenant_id) == $reservation->tenant_id)>
                                             {{ $reservation->tenant->name }} — {{ $reservation->room->boardingHouse->title }} / {{ __('Room') }} {{ $reservation->room->room_number }}
                                         </option>
                                     @endforeach
@@ -47,7 +48,7 @@
                                 <select id="room_id" name="room_id" class="mt-1 block w-full rounded-2xl border-slate-200 bg-slate-50/50 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-all" required>
                                     <option value="">{{ __('Verify target room') }}</option>
                                     @foreach ($rooms as $room)
-                                        <option value="{{ $room->id }}" @selected(old('room_id') == $room->id)>
+                                        <option value="{{ $room->id }}" @selected(old('room_id', $bill->room_id) == $room->id)>
                                             {{ $room->boardingHouse->title }} — {{ $room->room_number }}
                                         </option>
                                     @endforeach
@@ -63,7 +64,7 @@
                                 </label>
                                 <select id="bill_type" name="bill_type" class="mt-1 block w-full rounded-2xl border-slate-200 bg-slate-50/50 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-all" required>
                                     @foreach (\App\Enums\UtilityBillType::cases() as $type)
-                                        <option value="{{ $type->value }}" @selected(old('bill_type') === $type->value)>{{ $type->label() }}</option>
+                                        <option value="{{ $type->value }}" @selected(old('bill_type', $bill->bill_type->value) === $type->value)>{{ $type->label() }}</option>
                                     @endforeach
                                 </select>
                                 <x-input-error :messages="$errors->get('bill_type')" class="mt-2" />
@@ -77,7 +78,7 @@
                                 </label>
                                 <div class="relative mt-1">
                                     <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 font-bold">₱</div>
-                                    <input id="amount" name="amount" type="number" step="0.01" min="0" class="block w-full rounded-2xl border-slate-200 bg-slate-50/50 pl-8 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-all" :value="old('amount')" required />
+                                    <input id="amount" name="amount" type="number" step="0.01" min="0" class="block w-full rounded-2xl border-slate-200 bg-slate-50/50 pl-8 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-all" value="{{ old('amount', $bill->amount) }}" required />
                                 </div>
                                 <x-input-error :messages="$errors->get('amount')" class="mt-2" />
                             </div>
@@ -88,7 +89,7 @@
                                     <svg class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                                     {{ __('Billing Period') }}
                                 </label>
-                                <input id="billing_month" name="billing_month" type="date" class="mt-1 block w-full rounded-2xl border-slate-200 bg-slate-50/50 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-all" :value="old('billing_month', now()->startOfMonth()->toDateString())" required />
+                                <input id="billing_month" name="billing_month" type="date" class="mt-1 block w-full rounded-2xl border-slate-200 bg-slate-50/50 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-all" value="{{ old('billing_month', $bill->billing_month->toDateString()) }}" required />
                                 <x-input-error :messages="$errors->get('billing_month')" class="mt-2" />
                             </div>
 
@@ -98,15 +99,29 @@
                                     <svg class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                     {{ __('Due Date') }}
                                 </label>
-                                <input id="due_date" name="due_date" type="date" class="mt-1 block w-full rounded-2xl border-slate-200 bg-slate-50/50 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-all" :value="old('due_date')" required />
+                                <input id="due_date" name="due_date" type="date" class="mt-1 block w-full rounded-2xl border-slate-200 bg-slate-50/50 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-all" value="{{ old('due_date', $bill->due_date->toDateString()) }}" required />
                                 <x-input-error :messages="$errors->get('due_date')" class="mt-2" />
+                            </div>
+
+                            <!-- Status -->
+                            <div class="sm:col-span-2">
+                                <label for="status" class="flex items-center gap-2 text-sm font-bold text-slate-900 mb-2">
+                                    <svg class="h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    {{ __('Status') }}
+                                </label>
+                                <select id="status" name="status" class="mt-1 block w-full rounded-2xl border-slate-200 bg-slate-50/50 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-all" required>
+                                    @foreach (\App\Enums\UtilityBillStatus::cases() as $status)
+                                        <option value="{{ $status->value }}" @selected(old('status', $bill->status->value) === $status->value)>{{ $status->value }}</option>
+                                    @endforeach
+                                </select>
+                                <x-input-error :messages="$errors->get('status')" class="mt-2" />
                             </div>
                         </div>
 
                         <div class="flex items-center gap-4 pt-6">
                             <button type="submit" class="inline-flex flex-1 items-center justify-center rounded-2xl bg-indigo-600 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-indigo-200 transition-all hover:bg-indigo-700 active:scale-95">
-                                <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
-                                {{ __('Create & Send Notice') }}
+                                <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                                {{ __('Update Bill Notice') }}
                             </button>
                         </div>
                     </form>

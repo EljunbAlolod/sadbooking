@@ -2,12 +2,12 @@
     <x-slot name="header">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <p class="text-sm font-medium text-purple-600 uppercase tracking-wider">{{ __('Landlord Dashboard') }}</p>
+                <p class="text-sm font-medium text-indigo-600 uppercase tracking-wider">{{ __('Landlord Dashboard') }}</p>
                 <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ __('Reservation History') }}</h2>
                 <p class="mt-2 text-sm text-slate-600 max-w-2xl">{{ __('Complete history of all approved, rejected, cancelled, and completed reservations.') }}</p>
             </div>
             <div class="flex items-center gap-3">
-                <a href="{{ route('landlord.reservations.index') }}" class="inline-flex items-center justify-center gap-2 text-sm font-semibold text-slate-600 hover:text-purple-600 transition-colors">
+                <a href="{{ route('landlord.reservations.index') }}" class="inline-flex items-center justify-center gap-2 text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                     {{ __('Back to Pending') }}
                 </a>
@@ -26,6 +26,7 @@
                                 <th class="px-6 py-5">{{ __('Property & Room') }}</th>
                                 <th class="px-6 py-5">{{ __('Stay Timeline') }}</th>
                                 <th class="px-6 py-5">{{ __('Status') }}</th>
+                                <th class="px-6 py-5"></th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 bg-white">
@@ -43,7 +44,7 @@
                                 <tr class="group hover:bg-slate-50/50 transition-colors">
                                     <td class="px-8 py-6 sm:px-10">
                                         <div class="flex items-center gap-4">
-                                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-slate-500 group-hover:bg-purple-100 group-hover:text-purple-600 transition-colors">
+                                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-slate-500 group-hover:bg-indigo-100 group-hover:text-indigo-600 transition-colors">
                                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                                             </div>
                                             <div>
@@ -80,6 +81,21 @@
                                         <span class="inline-flex rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest shadow-sm border {{ $statusStyles }}">
                                             {{ $reservation->status->value }}
                                         </span>
+                                    </td>
+                                    <td class="px-8 py-6 text-end sm:px-10">
+                                        <div class="flex items-center justify-end gap-3">
+                                            <a href="{{ route('landlord.reservations.show', $reservation) }}" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-400 hover:text-indigo-600 hover:border-indigo-200 transition-all" title="{{ __('View Details') }}">
+                                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                            </a>
+                                            
+                                            <form method="POST" action="{{ route('landlord.reservations.destroy', $reservation) }}" class="inline" onsubmit="return confirm('{{ __('Are you sure you want to delete this reservation record?') }}')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-400 hover:text-rose-600 hover:border-rose-200 transition-all" title="{{ __('Delete Reservation') }}">
+                                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @empty

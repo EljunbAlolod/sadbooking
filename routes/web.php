@@ -65,12 +65,17 @@ Route::middleware(['auth', 'verified', 'role:landlord'])->prefix('landlord')->na
     Route::post('/tenants/{reservation}/remove', [LandlordTenantController::class, 'remove'])->name('tenants.remove');
     Route::get('/reservations', [LandlordReservationController::class, 'index'])->name('reservations.index');
     Route::get('/reservations/history', [LandlordReservationController::class, 'history'])->name('reservations.history');
+    Route::get('/reservations/{reservation}', [LandlordReservationController::class, 'show'])->name('reservations.show');
     Route::post('/reservations/{reservation}/approve', [LandlordReservationController::class, 'approve'])->name('reservations.approve');
     Route::post('/reservations/{reservation}/reject', [LandlordReservationController::class, 'reject'])->name('reservations.reject');
+    Route::delete('/reservations/{reservation}', [LandlordReservationController::class, 'destroy'])->name('reservations.destroy');
 
     Route::get('/bills', [LandlordUtilityBillController::class, 'index'])->name('bills.index');
     Route::get('/bills/create', [LandlordUtilityBillController::class, 'create'])->name('bills.create');
     Route::post('/bills', [LandlordUtilityBillController::class, 'store'])->name('bills.store');
+    Route::get('/bills/{utility_bill}/edit', [LandlordUtilityBillController::class, 'edit'])->name('bills.edit');
+    Route::put('/bills/{utility_bill}', [LandlordUtilityBillController::class, 'update'])->name('bills.update');
+    Route::delete('/bills/{utility_bill}', [LandlordUtilityBillController::class, 'destroy'])->name('bills.destroy');
     Route::patch('/bills/{utility_bill}/paid', [LandlordUtilityBillController::class, 'markPaid'])->name('bills.paid');
 });
 
