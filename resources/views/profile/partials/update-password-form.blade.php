@@ -16,25 +16,25 @@
         <div class="space-y-4">
             <div>
                 <x-input-label for="update_password_current_password" :value="__('Current Password')" />
-                <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500" autocomplete="current-password" />
+                <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-pink-500 focus:ring-pink-500" autocomplete="current-password" />
                 <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
             </div>
 
             <div>
                 <x-input-label for="update_password_password" :value="__('New Password')" />
-                <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500" autocomplete="new-password" />
+                <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-pink-500 focus:ring-pink-500" autocomplete="new-password" />
                 <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
             </div>
 
             <div>
                 <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
-                <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-indigo-500 focus:ring-indigo-500" autocomplete="new-password" />
+                <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full rounded-xl border-slate-200 focus:border-pink-500 focus:ring-pink-500" autocomplete="new-password" />
                 <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
             </div>
         </div>
 
         <div class="flex items-center gap-4 pt-4">
-            <x-primary-button class="bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-100 px-8 rounded-xl py-3">{{ __('Update Password') }}</x-primary-button>
+            <x-primary-button class="bg-pink-600 hover:bg-pink-700 shadow-lg shadow-pink-100 px-8 rounded-xl py-3">{{ __('Update Password') }}</x-primary-button>
 
             @if (session('status') === 'password-updated')
                 <p

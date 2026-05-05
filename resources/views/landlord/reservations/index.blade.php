@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <p class="text-sm font-medium text-indigo-600 uppercase tracking-wider">{{ __('Boarding Hub') }}</p>
+                <p class="text-sm font-medium text-pink-600 uppercase tracking-wider">{{ __('Boarding Hub') }}</p>
                 <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ __('Pending Requests') }}</h2>
                 <p class="mt-2 text-sm text-slate-600 max-w-2xl">{{ __('Review and manage incoming reservation requests for your properties.') }}</p>
             </div>
@@ -33,7 +33,7 @@
                                 <tr class="group hover:bg-slate-50/50 transition-colors">
                                     <td class="px-8 py-6 sm:px-10">
                                         <div class="flex items-center gap-4">
-                                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-slate-500 group-hover:bg-indigo-100 group-hover:text-indigo-600 transition-colors">
+                                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-slate-500 group-hover:bg-pink-100 group-hover:text-pink-600 transition-colors">
                                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                                             </div>
                                             <div>
@@ -45,7 +45,7 @@
                                     <td class="px-6 py-6">
                                         <div class="space-y-1">
                                             <div class="text-sm font-bold text-slate-700">{{ $reservation->room->boardingHouse->title }}</div>
-                                            <div class="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2 py-0.5 text-[10px] font-bold text-indigo-600 border border-indigo-100">
+                                            <div class="inline-flex items-center gap-1.5 rounded-lg bg-pink-50 px-2 py-0.5 text-[10px] font-bold text-pink-600 border border-pink-100">
                                                 {{ __('Room') }} {{ $reservation->room->room_number }}
                                             </div>
                                         </div>
@@ -68,13 +68,13 @@
                                     </td>
                                     <td class="px-8 py-6 text-end sm:px-10">
                                         <div class="flex items-center justify-end gap-3">
-                                            <a href="{{ route('landlord.reservations.show', $reservation) }}" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-400 hover:text-indigo-600 hover:border-indigo-200 transition-all" title="{{ __('View Details') }}">
+                                            <a href="{{ route('landlord.reservations.show', $reservation) }}" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-400 hover:text-pink-600 hover:border-pink-200 transition-all" title="{{ __('View Details') }}">
                                                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                                             </a>
                                             
                                             <form method="POST" action="{{ route('landlord.reservations.approve', $reservation) }}" class="inline">
                                                 @csrf
-                                                <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-3 py-1.5 text-[10px] font-bold text-white hover:bg-indigo-700 transition-all active:scale-95 shadow-lg shadow-indigo-100" title="{{ __('Approve') }}">
+                                                <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-pink-600 px-3 py-1.5 text-[10px] font-bold text-white hover:bg-pink-700 transition-all active:scale-95 shadow-lg shadow-pink-100" title="{{ __('Approve') }}">
                                                     {{ __('Approve') }}
                                                 </button>
                                             </form>

@@ -3,7 +3,7 @@
     <head>
         @include('layouts.partials.head')
     </head>
-    <body class="font-sans antialiased bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 text-slate-900">
+    <body class="font-sans antialiased bg-gradient-to-br from-slate-50 via-white to-pink-50/30 text-slate-900">
         <div class="flex min-h-screen flex-col">
             @include('layouts.partials.header-marketing')
 

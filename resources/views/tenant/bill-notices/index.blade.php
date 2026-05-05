@@ -2,12 +2,12 @@
     <x-slot name="header">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <p class="text-sm font-medium text-indigo-600 uppercase tracking-wider">{{ __('Boarding Hub') }}</p>
+                <p class="text-sm font-medium text-pink-600 uppercase tracking-wider">{{ __('Boarding Hub') }}</p>
                 <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{{ __('Bill Notices') }}</h2>
                 <p class="mt-2 text-sm text-slate-600 max-w-2xl">{{ __('Track your monthly boarding house fees, electric, water, and other utilities issued by your landlord.') }}</p>
             </div>
             <div class="hidden sm:block">
-                <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 shadow-sm">
+                <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-50 text-pink-600 shadow-sm">
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2-2V19a2 2 0 002 2z" /></svg>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                                 <tr class="group hover:bg-slate-50/50 transition-colors">
                                     <td class="px-8 py-6">
                                         <div class="flex items-center gap-4">
-                                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-slate-500 group-hover:bg-indigo-100 group-hover:text-indigo-600 transition-colors">
+                                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-slate-500 group-hover:bg-pink-100 group-hover:text-pink-600 transition-colors">
                                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
                                             </div>
                                             <div>

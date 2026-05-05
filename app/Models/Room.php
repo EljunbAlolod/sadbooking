@@ -72,6 +72,9 @@ class Room extends Model
         return $this->belongsToMany(Amenity::class)->withTimestamps();
     }
 
+    /**
+     * Get the accessible photo URL for the room.
+     */
     public function photoUrl(): ?string
     {
         $first = $this->photos->first();
@@ -79,32 +82,44 @@ class Room extends Model
             return $first->url();
         }
 
-        if (!$this->photo_path) {
+        if (! $this->photo_path) {
             return null;
         }
 
         return Storage::disk('public')->url($this->photo_path);
     }
 
+    /**
+     * Calculate the number of occupied slots based on active/approved reservations.
+     */
     public function occupiedSlots(): int
     {
         return (int) $this->reservations()
             ->whereIn('status', [ReservationStatus::Approved, ReservationStatus::Active])
             ->where(function ($query) {
+                // Consider ongoing stays or stays ending in the future
                 $query->whereDate('end_date', '>=', now())
                     ->orWhereNull('end_date');
             })
             ->count();
     }
 
+    /**
+     * Determine if the room can still accept more tenants.
+     */
     public function hasAvailableCapacity(): bool
     {
         return $this->status === RoomStatus::Available && $this->current_occupants < $this->capacity;
     }
 
+    /**
+     * Recalculate and synchronize the occupant count from active reservations.
+     */
     public function syncOccupantCountFromReservations(): void
     {
         $this->current_occupants = $this->occupiedSlots();
+
+        // Automatically update status based on occupancy
         if ($this->current_occupants >= $this->capacity) {
             $this->status = RoomStatus::Full;
         } else {

@@ -2,16 +2,16 @@
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <p class="text-sm font-medium text-indigo-600">{{ $boardingHouse->title }}</p>
+                <p class="text-sm font-medium text-pink-600">{{ $boardingHouse->title }}</p>
                 <h2 class="font-bold text-2xl text-slate-900 leading-tight">{{ __('Manage Rooms') }}</h2>
             </div>
             <div class="flex items-center gap-3">
-                <a href="{{ route('landlord.boarding-houses.show', $boardingHouse) }}" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors">
+                <a href="{{ route('landlord.boarding-houses.show', $boardingHouse) }}" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-pink-600 transition-colors">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                     {{ __('Back') }}
                 </a>
                 <a href="{{ route('landlord.boarding-houses.rooms.create', $boardingHouse) }}">
-                    <x-primary-button class="rounded-2xl px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-100 transition-all active:scale-95">
+                    <x-primary-button class="rounded-2xl px-6 py-2.5 bg-pink-600 hover:bg-pink-700 shadow-lg shadow-pink-100 transition-all active:scale-95">
                         <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                         {{ __('Add Room') }}
                     </x-primary-button>
@@ -24,7 +24,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 @forelse ($boardingHouse->rooms as $room)
-                    <div class="group relative bg-white rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:border-indigo-200 transition-all duration-300 overflow-hidden">
+                    <div class="group relative bg-white rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-xl hover:border-pink-200 transition-all duration-300 overflow-hidden">
                         <!-- Room Header / Image Preview -->
                         <div class="relative h-48 bg-slate-100 overflow-hidden">
                             @if($room->photos->isNotEmpty())
@@ -50,10 +50,10 @@
                         <div class="p-6">
                             <div class="flex items-start justify-between mb-4">
                                 <div>
-                                    <h3 class="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">{{ __('Room') }} {{ $room->room_number }}</h3>
+                                    <h3 class="text-lg font-bold text-slate-900 group-hover:text-pink-600 transition-colors">{{ __('Room') }} {{ $room->room_number }}</h3>
                                     <p class="text-sm text-slate-500 flex items-center gap-1 mt-1">
                                         <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                        <span class="font-semibold text-indigo-600">₱{{ number_format($room->monthly_rate, 2) }}</span> / month
+                                        <span class="font-semibold text-pink-600">₱{{ number_format($room->monthly_rate, 2) }}</span> / month
                                     </p>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
                                     <p class="text-[10px] uppercase tracking-wider font-bold text-slate-400 mb-2">{{ __('Amenities') }}</p>
                                     <div class="flex flex-wrap gap-2">
                                         @foreach($room->amenities->take(3) as $amenity)
-                                            <span class="px-2 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-[10px] font-medium border border-indigo-100/50">
+                                            <span class="px-2 py-1 bg-pink-50 text-pink-600 rounded-lg text-[10px] font-medium border border-pink-100/50">
                                                 {{ $amenity->name }}
                                             </span>
                                         @endforeach
@@ -94,7 +94,7 @@
                             @endif
 
                             <div class="flex items-center gap-3 pt-4 border-t border-slate-100">
-                                <a href="{{ route('landlord.boarding-houses.rooms.edit', [$boardingHouse, $room]) }}" class="flex-1 inline-flex justify-center items-center px-4 py-2 bg-indigo-600 text-white text-xs font-bold rounded-xl hover:bg-indigo-700 transition-colors shadow-sm shadow-indigo-100">
+                                <a href="{{ route('landlord.boarding-houses.rooms.edit', [$boardingHouse, $room]) }}" class="flex-1 inline-flex justify-center items-center px-4 py-2 bg-pink-600 text-white text-xs font-bold rounded-xl hover:bg-pink-700 transition-colors shadow-sm shadow-pink-100">
                                     {{ __('Edit Details') }}
                                 </a>
                                 <form method="POST" action="{{ route('landlord.boarding-houses.rooms.destroy', [$boardingHouse, $room]) }}" onsubmit="return confirm('{{ __('Delete this room?') }}');" class="inline">

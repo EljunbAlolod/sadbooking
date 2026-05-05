@@ -17,7 +17,7 @@ class LandlordTenantController extends Controller
 
         $reservations = Reservation::query()
             ->with(['tenant', 'room.boardingHouse'])
-            ->whereHas('room.boardingHouse', fn($q) => $q->where('landlord_id', $landlordId))
+            ->whereHas('room.boardingHouse', fn ($q) => $q->where('landlord_id', $landlordId))
             ->whereIn('status', [ReservationStatus::Approved, ReservationStatus::Active])
             ->where(function ($query) {
                 $query->whereNull('end_date')

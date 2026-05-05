@@ -1,4 +1,4 @@
-ï»¿<x-app-layout>
+<x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ $boardingHouse->title }}
@@ -45,8 +45,8 @@
                             <div class="space-y-2">
                                 <p class="font-medium text-slate-900">{{ __('Room') }} {{ $room->room_number }}</p>
                                 <p class="text-sm text-slate-600">
-                                    {{ __('Capacity') }}: {{ $room->capacity }} Â·
-                                    {{ __('Occupants') }}: {{ $room->current_occupants }} Â·
+                                    {{ __('Capacity') }}: {{ $room->capacity }} ·
+                                    {{ __('Occupants') }}: {{ $room->current_occupants }} ·
                                     {{ __('Status') }}: {{ $room->status->value }}
                                 </p>
                                 @if ($room->amenities->isNotEmpty())
@@ -73,7 +73,7 @@
                                         <span class="text-sm text-slate-500">{{ __('Full') }}</span>
                                     @endif
                                 @else
-                                    <a href="{{ route('login') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">{{ __('Log in as a tenant to reserve') }}</a>
+                                    <a href="{{ route('login') }}" class="text-sm font-medium text-pink-600 hover:text-pink-500">{{ __('Log in as a tenant to reserve') }}</a>
                                 @endauth
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                 </div>
             </div>
 
-            <a href="{{ route('boarding-houses.index') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">{{ __('? Back to search') }}</a>
+            <a href="{{ route('boarding-houses.index') }}" class="text-sm font-medium text-pink-600 hover:text-pink-500">{{ __('? Back to search') }}</a>
         </div>
     </div>
 </x-app-layout>
