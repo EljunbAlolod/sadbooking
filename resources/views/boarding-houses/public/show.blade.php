@@ -176,11 +176,18 @@
                                         <div class="mt-auto pt-6 border-t border-slate-100">
                                             @auth
                                                 @if (auth()->user()->isTenant() && $room->status->value === 'available')
-                                                    <a href="{{ route('tenant.reservations.create', [$boardingHouse, $room]) }}" 
-                                                        class="inline-flex w-full items-center justify-center rounded-2xl bg-pink-600 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-pink-200 transition-all hover:bg-pink-700 active:scale-95">
-                                                        <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                                                        {{ __('Reserve This Room') }}
-                                                    </a>
+                                                    @if ($tenantHasActiveStay)
+                                                        <button disabled class="inline-flex w-full items-center justify-center rounded-2xl bg-amber-50 border border-amber-200 px-6 py-4 text-sm font-bold text-amber-700 cursor-not-allowed">
+                                                            <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                                            {{ __('You have an active stay') }}
+                                                        </button>
+                                                    @else
+                                                        <a href="{{ route('tenant.reservations.create', [$boardingHouse, $room]) }}" 
+                                                            class="inline-flex w-full items-center justify-center rounded-2xl bg-pink-600 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-pink-200 transition-all hover:bg-pink-700 active:scale-95">
+                                                            <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                                            {{ __('Reserve This Room') }}
+                                                        </a>
+                                                    @endif
                                                 @elseif (auth()->user()->isTenant())
                                                     <button disabled class="inline-flex w-full items-center justify-center rounded-2xl bg-slate-100 px-6 py-4 text-sm font-bold text-slate-400 cursor-not-allowed">
                                                         {{ __('Currently Full') }}
