@@ -24,6 +24,7 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 ## 📖 Documentation
 - [User Manual](USER_MANUAL.md) - Comprehensive guide for Tenants, Landlords, and Admins.
 - [Database Schema & Terms](DATABASE_SCHEMA.md) - Platform rules and technical schema.
+- [Cloning Guide](CLONING_GUIDE.md) - Steps to set up the project locally.
 
 ## Learning Laravel
 

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ReservationStatus;
 use App\Models\Amenity;
 use App\Models\BoardingHouse;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -77,8 +79,17 @@ class PublicBoardingHouseController extends Controller
             'rooms.boardingHouse',
         ]);
 
+        $tenantHasActiveStay = false;
+
+        if (auth()->check() && auth()->user()->isTenant()) {
+            $tenantHasActiveStay = Reservation::where('tenant_id', auth()->id())
+                ->whereIn('status', [ReservationStatus::Active, ReservationStatus::Approved])
+                ->exists();
+        }
+
         return view('boarding-houses.public.show', [
             'boardingHouse' => $boarding_house,
+            'tenantHasActiveStay' => $tenantHasActiveStay,
         ]);
     }
 }

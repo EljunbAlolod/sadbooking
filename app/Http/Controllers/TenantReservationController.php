@@ -19,6 +19,12 @@ class TenantReservationController extends Controller
             abort(404);
         }
 
+        if ($this->tenantHasActiveStay(request()->user()->id)) {
+            return redirect()
+                ->route('boarding-houses.show', $boarding_house)
+                ->with('error', __('You already have an active stay at a boarding house. Please complete your current stay before making a new reservation.'));
+        }
+
         if ($room->status !== RoomStatus::Available || ! $room->hasAvailableCapacity()) {
             return redirect()
                 ->route('boarding-houses.show', $boarding_house)
@@ -35,6 +41,10 @@ class TenantReservationController extends Controller
     {
         if ($room->boarding_house_id !== $boarding_house->id) {
             abort(404);
+        }
+
+        if ($this->tenantHasActiveStay($request->user()->id)) {
+            return back()->withInput()->with('error', __('You already have an active stay at a boarding house. Please complete your current stay before making a new reservation.'));
         }
 
         $validated = $request->validate([
@@ -57,5 +67,12 @@ class TenantReservationController extends Controller
         return redirect()
             ->route('tenant.reservations.index')
             ->with('status', __('Reservation request submitted.'));
+    }
+
+    private function tenantHasActiveStay(int $tenantId): bool
+    {
+        return Reservation::where('tenant_id', $tenantId)
+            ->whereIn('status', [ReservationStatus::Active, ReservationStatus::Approved])
+            ->exists();
     }
 }

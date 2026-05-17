@@ -70,14 +70,14 @@
                                         <span @class([
                                             'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-widest shadow-sm border',
                                             'bg-pink-50 text-pink-700 border-pink-100' => $reservation->status->value === 'active',
-                                            'bg-emerald-50 text-emerald-700 border-emerald-100' => $reservation->status->value === 'completed',
-                                            'bg-slate-50 text-slate-600 border-slate-100' => !in_array($reservation->status->value, ['active', 'completed']),
+                                            'bg-emerald-50 text-emerald-700 border-emerald-100' => $reservation->status->value === 'approved',
+                                            'bg-slate-50 text-slate-600 border-slate-100' => !in_array($reservation->status->value, ['active', 'approved']),
                                         ])>
                                             <span @class([
                                                 'h-1.5 w-1.5 rounded-full',
                                                 'bg-pink-500' => $reservation->status->value === 'active',
-                                                'bg-emerald-500' => $reservation->status->value === 'completed',
-                                                'bg-slate-400' => !in_array($reservation->status->value, ['active', 'completed']),
+                                                'bg-emerald-500' => $reservation->status->value === 'approved',
+                                                'bg-slate-400' => !in_array($reservation->status->value, ['active', 'approved']),
                                             ])></span>
                                             {{ $reservation->status->value }}
                                         </span>
